@@ -1,0 +1,20 @@
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap");
+@media (max-width: 1399.98px) {
+  .container {
+    max-width: 100%;
+  }
+}
+body {
+  font-family: "Ubuntu", sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  background-color: hsl(200deg, 6%, 10%);
+}
+
+/* MIXIN SCSS */
+/* FUNCTIONS SCSS */
+/* styled component */
+/* styled component */
+/* styled component */
+/* styled component */
+/* styled component *//*# sourceMappingURL=style.css.map */

@@ -13,8 +13,7 @@
  *              title: string, 
  *              description: string, 
  *              rating: number,
- *              views: number, 
- *              category: string
+ *              views: number,
  *              tags: string[]
  *            } } post
  */
@@ -62,8 +61,3 @@ let comment
  * @type {comment[]}
  */
 let comments
-
-
-
-
-

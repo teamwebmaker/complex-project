@@ -1,7 +1,7 @@
 /**
  * @type {string}
  */
-const API_URL =  'https://dummyjson.com'
+const API_URL =  'http://localhost:3000'
 /**
  * @type {Number}
  */

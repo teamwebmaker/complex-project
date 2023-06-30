@@ -1,39 +1,41 @@
 {
-    "categories": [
-        {
-            "id": "ba4fbb5b-e428-4ef1-b189-4b0f4d4eaef9",
-            "title": "culture"
-        },
-        {
-            "id": "16588d66-e5bc-40e0-a1da-eb1eed6fe22f",
-            "title": "science"
-        },
-        {
-            "id": "931448d8-bdb0-4481-8a1a-da5d7fbcb5ef",
-            "title": "politics"
-        },
-        {
-            "id": "02e0a265-4cbb-4e13-95ab-7cb7f9bf3c22",
-            "title": "economic"
-        },
-        {
-            "id": "52a6a9c6-6cd3-447d-bb5b-c637ca06e5ab",
-            "title": "sports"
-        },
-        {
-            "id": "6cb8763e-e85e-4f83-81a2-ed0852b214d7", 
-            "title": "religion"
-        },
-        {
-            "id": "fc77fecd-b313-4b4b-a976-5dacd0a47c7b", 
-            "title": "history"
-        }
-    ],
-    "users": [
-        
-    ],
-    "posts": [
-    ],
-    "comments": [
-    ]
+  "categories": [
+    {
+      "id": "ba4fbb5b-e428-4ef1-b189-4b0f4d4eaef9",
+      "title": "culture"
+    },
+    {
+      "id": "16588d66-e5bc-40e0-a1da-eb1eed6fe22f",
+      "title": "science"
+    },
+    {
+      "id": "931448d8-bdb0-4481-8a1a-da5d7fbcb5ef",
+      "title": "politics"
+    },
+    {
+      "id": "02e0a265-4cbb-4e13-95ab-7cb7f9bf3c22",
+      "title": "economic"
+    },
+    {
+      "id": "52a6a9c6-6cd3-447d-bb5b-c637ca06e5ab",
+      "title": "sports"
+    },
+    {
+      "id": "6cb8763e-e85e-4f83-81a2-ed0852b214d7",
+      "title": "religion"
+    },
+    {
+      "id": "fc77fecd-b313-4b4b-a976-5dacd0a47c7b",
+      "title": "history"
+    }
+  ],
+  "users": [
+    {
+      "id": "bb4b283f-78f0-4f30-9033-7ab0c4c0e8cc",
+      "email": "bejaziqig@mailinator.com",
+      "password": "Pa$$w0rd!"
+    }
+  ],
+  "posts": [],
+  "comments": []
 }

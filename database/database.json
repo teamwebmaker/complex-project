@@ -34,8 +34,28 @@
       "id": "bb4b283f-78f0-4f30-9033-7ab0c4c0e8cc",
       "email": "bejaziqig@mailinator.com",
       "password": "Pa$$w0rd!"
+    },
+    {
+      "id": "2604dac7-725d-4e4e-a255-accc2a4b72af",
+      "email": "1111@gmail.com",
+      "password": "111111"
     }
   ],
-  "posts": [],
+  "posts": [
+    {
+      "id": "aca1df43-75a3-4e0d-af4c-abe429dfe056",
+      "userId": "2604dac7-725d-4e4e-a255-accc2a4b72af",
+      "categoryId": "16588d66-e5bc-40e0-a1da-eb1eed6fe22f",
+      "title": "Exercitationem saepe",
+      "description": "Irure harum quia mai",
+      "rating": 0,
+      "views": 0,
+      "tags": [
+        "html",
+        "css",
+        "js"
+      ]
+    }
+  ],
   "comments": []
 }

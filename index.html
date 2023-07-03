@@ -17,13 +17,17 @@
     <div class="container">
       <div class="row">
         <div class="col-md-6">
-         
+          <div class="card" id="actions-dashboard">
+          </div>
         </div>
         <div class="col-md-6">
           <div class="card" id="admin-dashboard">
-
           </div>
         </div>
+      </div>
+
+      <div class="row p-5" id="posts">
+
       </div>
     </div>
 
@@ -44,8 +48,8 @@
       </form>
     </template>
 
-    <template id="authorization-template">
-      <form>
+    <template id="authorization-template" >
+      <form onsubmit="authorization(event)">
         <div class="mb-3">
           <input type="email" class="form-control" name="email"  />
         </div>
@@ -53,6 +57,23 @@
           <input type="password" class="form-control" name="password">
         </div>
         <button type="submit" class="btn btn-primary">authorization</button>
+      </form>
+    </template>
+
+    <!-- create Post Templates -->
+    <template id="create-post-template">
+      <form onsubmit="storePost(event)">
+        <div class="mb-3">
+          <input type="title" class="form-control" placeholder="Title" name="title" />
+        </div>
+        <div class="mb-3">
+          <textarea class="form-control" placeholder="Description" name="description" rows="3"></textarea>
+        </div>
+        <div class="mb-3">
+          <select class="form-select" name="category_id" aria-label="Default select example"></select>
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Store Post</button>
       </form>
     </template>
     <!-- Modal -->
@@ -74,10 +95,13 @@
     <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
     <script src="scripts/app.js" type="module"></script>
     <script type="module">
-      import { showModal, registration, logOut} from './scripts/functions.js'
+      import { showModal, registration, authorization,createPost, storePost,logOut} from './scripts/functions.js'
       window.showModal = showModal
       window.registration = registration
       window.logOut = logOut
+      window.authorization = authorization
+      window.createPost = createPost
+      window.storePost = storePost
     </script>
   </body>
 </html>
@@ -98,4 +122,6 @@
     https://www.javatpoint.com/git-commands,
     https://dzone.com/articles/top-20-git-commands-with-examples,
     https://www.loginradius.com/blog/engineering/git-commands/
+  stack overflow:
+    https://stackoverflow.com/questions/33438158/best-way-to-call-an-asynchronous-function-within-map
 -->

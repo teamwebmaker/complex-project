@@ -10,6 +10,29 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
     <link rel="stylesheet" href="styles/style.css" />
     <link rel="shortcut icon" href="images/theme/comlpex_project.png" type="image/x-icon">
+    <style>
+      .culture{
+        border-color: hsl(81, 50%, 38%);
+      }
+      .science{
+        border-color: hsl(14, 100%, 36%);
+      }
+      .politics{
+        border-color: hsl(54, 100%, 25%);
+      }
+      .economic{
+        border-color: hsl(187, 100%, 33%);
+      }
+      .sports{
+        border-color: hsl(4, 90%, 35%);
+      }
+      .religion{
+        border-color: hsl(291, 64%, 34%);
+      }
+      .history{
+        border-color: hsl(174, 100%, 24%);
+      }
+    </style>
   </head>
 
  
@@ -76,6 +99,19 @@
         <button type="submit" class="btn btn-primary">Store Post</button>
       </form>
     </template>
+    <!-- Create comment Templates -->
+    <template id="create-comment-template">
+      <form onsubmit="storeComment(event)">
+        <div class="mb-3">
+          <textarea class="form-control" placeholder="Comment" name="comment" rows="3"></textarea>
+        </div>
+        <input type="hidden" name="post_id">
+
+        <button type="submit" class="btn btn-primary">store Comment</button>
+      </form>
+    </template>
+
+
     <!-- Modal -->
 <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -95,13 +131,16 @@
     <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
     <script src="scripts/app.js" type="module"></script>
     <script type="module">
-      import { showModal, registration, authorization,createPost, storePost,logOut} from './scripts/functions.js'
+      import { showModal, registration, authorization, createPost, storePost, CreateComment, storeComment, viewComments,  logOut} from './scripts/functions.js'
       window.showModal = showModal
       window.registration = registration
       window.logOut = logOut
       window.authorization = authorization
       window.createPost = createPost
       window.storePost = storePost
+      window.CreateComment = CreateComment
+      window.storeComment = storeComment
+      window.viewComments = viewComments
     </script>
   </body>
 </html>

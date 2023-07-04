@@ -73,7 +73,7 @@ const _tag = (_) => {
 const _post = (_) => {
     const {id, title, description, views, rating, tags, category} = _
     const tagsList = tags.map(tag => _tag({ id: $uuid(),title:tag }) ).join("")
-    return `<div class="card ">
+    return `<div class="card ${category}">
     <div class="card-header">
         <h5 class="card-title">${title}</h5>
         <p class="card-description">${description}</p>
@@ -89,8 +89,8 @@ const _post = (_) => {
     </div>
     <div class="card-footer">
         <div class="btn-group w-100" role="group" aria-label="Basic example">
-            <button type="button w-50" class="btn btn-success">view comments</button>
-            <button type="button w-50" class="btn btn-warning">add comment</button>
+            <button type="button w-50" class="btn btn-success" data-post-id="${id}" data-template="" onclick="viewComments(this)">view comments</button>
+            <button type="button w-50" class="btn btn-warning" data-post-id="${id}" data-template="create-comment" onclick="CreateComment(this)">add comment</button>
         </div>
     </div>
 </div>`
@@ -106,11 +106,24 @@ const _wrapped = (content, classes) => {
                 ${content}
             </div>`
 }
+/**
+ * 
+ * @param {{id:string, email:string, comment:string}} _ 
+ * @returns {string} // HTML LAYOUT COMPONENT
+ */
+const _comment = (_) => {
+    const {id, email, comment} = _
+    return `<div class="card text-bg-success mb-2 p-2" id="${id}">
+                <p class="user-email text-warning">${email}</p>
+                <p class="card-text">${comment}</p>
+            </div>`
+}
 export {
     _dashboardLogIn,
     _dashboardLogOut,
     _actionsDashboard,
     _option,
     _post,
-    _wrapped
+    _wrapped,
+    _comment
 }

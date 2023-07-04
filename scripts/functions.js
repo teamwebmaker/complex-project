@@ -1,10 +1,10 @@
 import { modalPopup } from './services.js'
-import { $getTemplateContentById, $render, $uuid} from './helpers.js'
-import { modal } from './dom.js'
+import { $getTemplateContentById, $render, $uuid, $insertHtml} from './helpers.js'
+import { modal, posts } from './dom.js'
 import { _post_, _get_} from './http.js'
 import { API_URL } from './config.js' 
 import { insert, select } from './storage.js'
-import { _option } from './components.js'
+import { _option, _post, _comment, _wrapped } from './components.js'
 
 const showModal = (e) => {
     const {template} = e.dataset
@@ -83,13 +83,72 @@ const storePost = async (e) => {
     if(result)  {
         e.target.reset()
         modalPopup.hide()
-
+        const category = await _get_(`${API_URL}/categories/${post.categoryId}`)
+        $insertHtml(posts, _post({...post, category}))
     }
 }
+const CreateComment = async (e) => {
+    const {template, postId} = e.dataset
+    const selector = [template , "template"].join("-")
+    const templateContent = $getTemplateContentById(selector)
+    templateContent.querySelector('[name="post_id"]').value = postId
+    const children = [...modal?.querySelector(".modal-body").children]
+    children.forEach((child) =>  child.remove())
+    modal?.querySelector(".modal-body")?.appendChild(templateContent)
+    modalPopup.show()
+}
 
+const storeComment = async (e) => {
+    e.preventDefault()
+    const {post_id, comment} = e.target
+    const [admin] = select('admin')
+    const newComment = {
+        id: $uuid(),
+        userId: admin.id, 
+        postId: post_id.value, 
+        comment: comment.value
+    }
+    const result = await _post_(`${API_URL}/comments`, newComment)
+    if(result)  {
+        e.target.reset()
+        modalPopup.hide()
+    }
+
+}
+const viewComments = async (e) => {
+    const {postId} = e.dataset
+    const url = `${API_URL}/posts/${postId}?_embed=comments`
+    const post = await _get_(url)
+    const comments = await Promise.all( post.comments.map( async (comment) => {
+        const user = await _get_(`${API_URL}/users/${comment.userId}`)
+        return {...comment, email: user.email }
+    }) )
+
+    const commentsTemplates = comments.map((comment) => _comment(comment))
+    const children = [...modal?.querySelector(".modal-body").children]
+    children.forEach((child) =>  child.remove())
+
+    const cardBody = _wrapped(_post(post), ["card-body"])
+    const cardFooter = _wrapped(commentsTemplates.join(""), ["card-footer"])
+    const card = _wrapped([cardBody, cardFooter].join(""), ["card"])
+    
+    $render(modal?.querySelector(".modal-body"), card)
+    modalPopup.show()
+}
 const logOut = () => { 
     localStorage.removeItem("admin")
     window.location.reload()
 }
 
-export { showModal, registration,authorization, createPost,storePost, logOut } 
+export { 
+    showModal, 
+    registration,
+    authorization, 
+    createPost,
+    storePost,
+    storeComment,
+    CreateComment,
+    viewComments,
+    logOut,
+    
+} 

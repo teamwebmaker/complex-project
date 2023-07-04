@@ -22,7 +22,7 @@ window.addEventListener('DOMContentLoaded', async()=> {
 
     $render(posts, postsList
         .map(post => _post(post))
-        .map(post => _wrapped(post, ["col-lg-4", "col-md-2", "sm-6"]))
+        .map(post => _wrapped(post, ["col-lg-4", "col-md-2", "sm-6", "mb-4"])).join("")
         )
     
 })

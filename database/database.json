@@ -55,7 +55,74 @@
         "css",
         "js"
       ]
+    },
+    {
+      "id": "fce655ca-a4d8-449c-90f4-fde031026260",
+      "userId": "2604dac7-725d-4e4e-a255-accc2a4b72af",
+      "categoryId": "16588d66-e5bc-40e0-a1da-eb1eed6fe22f",
+      "title": "Sint ut consequatur",
+      "description": "Asperiores quae odio",
+      "rating": 0,
+      "views": 0,
+      "tags": [
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "id": "495c16a3-5813-4123-9760-238aa5367da6",
+      "userId": "2604dac7-725d-4e4e-a255-accc2a4b72af",
+      "categoryId": "931448d8-bdb0-4481-8a1a-da5d7fbcb5ef",
+      "title": "Illo error consequat",
+      "description": "Esse sapiente sit o",
+      "rating": 0,
+      "views": 0,
+      "tags": [
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "id": "eefc3ca5-a2b3-4707-a584-b58e9fbf8fc2",
+      "userId": "2604dac7-725d-4e4e-a255-accc2a4b72af",
+      "categoryId": "fc77fecd-b313-4b4b-a976-5dacd0a47c7b",
+      "title": "Assumenda laboriosam",
+      "description": "Blanditiis similique",
+      "rating": 0,
+      "views": 0,
+      "tags": [
+        "html",
+        "css",
+        "js"
+      ]
     }
   ],
-  "comments": []
+  "comments": [
+    {
+      "id": "be444f81-a968-4265-babc-700a40351870",
+      "userId": "2604dac7-725d-4e4e-a255-accc2a4b72af",
+      "postId": "aca1df43-75a3-4e0d-af4c-abe429dfe056",
+      "comment": "Maxime nesciunt ips"
+    },
+    {
+      "id": "a91fd920-9972-4686-8e2b-32b7435d3d43",
+      "userId": "2604dac7-725d-4e4e-a255-accc2a4b72af",
+      "postId": "fce655ca-a4d8-449c-90f4-fde031026260",
+      "comment": "Aut laboris error qu"
+    },
+    {
+      "id": "fe14e2a0-34fb-483a-8664-4da95e6474da",
+      "userId": "2604dac7-725d-4e4e-a255-accc2a4b72af",
+      "postId": "aca1df43-75a3-4e0d-af4c-abe429dfe056",
+      "comment": "Rerum nemo quis id "
+    },
+    {
+      "id": "b337d9f0-65f2-4ad9-a2a5-6d32ccc7f86d",
+      "userId": "2604dac7-725d-4e4e-a255-accc2a4b72af",
+      "postId": "eefc3ca5-a2b3-4707-a584-b58e9fbf8fc2",
+      "comment": "Et expedita esse off"
+    }
+  ]
 }

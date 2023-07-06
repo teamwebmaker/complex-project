@@ -67,12 +67,14 @@ const _tag = (_) => {
  *          views:number,
  *          rating:number,
  *          tags:string[],
- *          category:string}} _ 
+ *          category:string,
+ *          isAuth: boolean}} _ 
  * @returns {string} // HTML LAYOUT COMPONENT
  */
 const _post = (_) => {
-    const {id, title, description, views, rating, tags, category} = _
+    const {id, title, description, views, rating, tags, category, isAuth} = _
     const tagsList = tags.map(tag => _tag({ id: $uuid(),title:tag }) ).join("")
+    const commentAction = isAuth ? "CreateComment(this)" : "userMessage()"
     return `<div class="card ${category}">
     <div class="card-header">
         <h5 class="card-title">${title}</h5>
@@ -90,7 +92,7 @@ const _post = (_) => {
     <div class="card-footer">
         <div class="btn-group w-100" role="group" aria-label="Basic example">
             <button type="button w-50" class="btn btn-success" data-post-id="${id}" data-template="" onclick="viewComments(this)">view comments</button>
-            <button type="button w-50" class="btn btn-warning" data-post-id="${id}" data-template="create-comment" onclick="CreateComment(this)">add comment</button>
+            <button type="button w-50" class="btn btn-warning" data-post-id="${id}" data-template="create-comment" onclick="${commentAction}">add comment</button>
         </div>
     </div>
 </div>`
@@ -108,16 +110,35 @@ const _wrapped = (content, classes) => {
 }
 /**
  * 
- * @param {{id:string, email:string, comment:string}} _ 
+ * @param {{id:string, email:string, comment:string, admin:null | object}} _ 
  * @returns {string} // HTML LAYOUT COMPONENT
  */
 const _comment = (_) => {
-    const {id, email, comment} = _
+    const {id, email, comment, admin} = _
+    let action = ""
+    if(admin) {
+        if(admin.email === email) {
+            action = `<button type="button" class="btn btn-danger delete-comment" data-id="${id}" onclick="deleteComment(this)"><i class="bi bi-trash3"></i></button>`
+        } 
+    }
     return `<div class="card text-bg-success mb-2 p-2" id="${id}">
+                ${action}
                 <p class="user-email text-warning">${email}</p>
                 <p class="card-text">${comment}</p>
             </div>`
 }
+/**
+ * 
+ * @param {{id:string, status: string, message: string}} _ 
+ * @returns {string} 
+ */
+const _alert = (_) => {
+    const {id, status, message} = _
+    return `<div class="alert alert-${status}" id="${id}" role="alert">
+                ${message}
+            </div>`
+}
+
 export {
     _dashboardLogIn,
     _dashboardLogOut,
@@ -125,5 +146,6 @@ export {
     _option,
     _post,
     _wrapped,
-    _comment
+    _comment,
+    _alert
 }

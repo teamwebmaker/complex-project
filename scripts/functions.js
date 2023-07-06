@@ -1,10 +1,10 @@
 import { modalPopup } from './services.js'
-import { $getTemplateContentById, $render, $uuid, $insertHtml} from './helpers.js'
-import { modal, posts } from './dom.js'
-import { _post_, _get_} from './http.js'
+import { $getTemplateContentById, $render, $uuid, $insertHtml, $getById} from './helpers.js'
+import { modal, posts, dialogBox} from './dom.js'
+import { _post_, _get_, _update_, _delete_} from './http.js'
 import { API_URL } from './config.js' 
 import { insert, select } from './storage.js'
-import { _option, _post, _comment, _wrapped } from './components.js'
+import { _option, _post, _comment, _wrapped, _alert } from './components.js'
 
 const showModal = (e) => {
     const {template} = e.dataset
@@ -119,12 +119,14 @@ const viewComments = async (e) => {
     const {postId} = e.dataset
     const url = `${API_URL}/posts/${postId}?_embed=comments`
     const post = await _get_(url)
+
     const comments = await Promise.all( post.comments.map( async (comment) => {
         const user = await _get_(`${API_URL}/users/${comment.userId}`)
         return {...comment, email: user.email }
     }) )
-
-    const commentsTemplates = comments.map((comment) => _comment(comment))
+    const admin = localStorage.hasOwnProperty('admin') ? select('admin')[0] : null
+    
+    const commentsTemplates = comments.map((comment) => _comment({...comment, admin}))
     const children = [...modal?.querySelector(".modal-body").children]
     children.forEach((child) =>  child.remove())
 
@@ -135,6 +137,23 @@ const viewComments = async (e) => {
     $render(modal?.querySelector(".modal-body"), card)
     modalPopup.show()
 }
+const userMessage = () => {
+    $render(dialogBox, _alert({id: $uuid(), status: "danger", message: "please log in if you want to add comment"}))
+    setTimeout(()=> {
+        $render(dialogBox, "")
+    }, 3000)
+}
+
+const deleteComment = (e) => { 
+    if(confirm(`Are you sure you want to delete this comment`)) {
+        const {id} = e.dataset
+        const url = `${API_URL}/comments/${id}`
+        if(_delete_(url)) {
+            $getById(id)?.remove() 
+        } 
+    }
+}
+
 const logOut = () => { 
     localStorage.removeItem("admin")
     window.location.reload()
@@ -149,6 +168,8 @@ export {
     storeComment,
     CreateComment,
     viewComments,
+    userMessage,
+    deleteComment,
     logOut,
     
 } 

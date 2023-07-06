@@ -39,23 +39,24 @@
       "id": "2604dac7-725d-4e4e-a255-accc2a4b72af",
       "email": "1111@gmail.com",
       "password": "111111"
+    },
+    {
+      "id": "fccf9f9d-b5ba-4d91-ba0d-4d38ca0a95d8",
+      "email": "nufeh@mailinator.com",
+      "password": "Pa$$w0rd!"
+    },
+    {
+      "id": "4c931a74-57e8-4962-b2ac-96fb05e11ac5",
+      "email": "guxu@mailinator.com",
+      "password": "Pa$$w0rd!"
+    },
+    {
+      "id": "b6df0cdf-05ed-435e-8b6d-0b65f8937131",
+      "email": "lisilulazi@mailinator.com",
+      "password": "Pa$$w0rd!"
     }
   ],
   "posts": [
-    {
-      "id": "aca1df43-75a3-4e0d-af4c-abe429dfe056",
-      "userId": "2604dac7-725d-4e4e-a255-accc2a4b72af",
-      "categoryId": "16588d66-e5bc-40e0-a1da-eb1eed6fe22f",
-      "title": "Exercitationem saepe",
-      "description": "Irure harum quia mai",
-      "rating": 0,
-      "views": 0,
-      "tags": [
-        "html",
-        "css",
-        "js"
-      ]
-    },
     {
       "id": "fce655ca-a4d8-449c-90f4-fde031026260",
       "userId": "2604dac7-725d-4e4e-a255-accc2a4b72af",
@@ -63,11 +64,19 @@
       "title": "Sint ut consequatur",
       "description": "Asperiores quae odio",
       "rating": 0,
-      "views": 0,
+      "views": 5,
       "tags": [
         "html",
         "css",
         "js"
+      ],
+      "comments": [
+        {
+          "id": "a91fd920-9972-4686-8e2b-32b7435d3d43",
+          "userId": "2604dac7-725d-4e4e-a255-accc2a4b72af",
+          "postId": "fce655ca-a4d8-449c-90f4-fde031026260",
+          "comment": "Aut laboris error qu"
+        }
       ]
     },
     {
@@ -77,12 +86,13 @@
       "title": "Illo error consequat",
       "description": "Esse sapiente sit o",
       "rating": 0,
-      "views": 0,
+      "views": 1,
       "tags": [
         "html",
         "css",
         "js"
-      ]
+      ],
+      "comments": []
     },
     {
       "id": "eefc3ca5-a2b3-4707-a584-b58e9fbf8fc2",
@@ -91,21 +101,23 @@
       "title": "Assumenda laboriosam",
       "description": "Blanditiis similique",
       "rating": 0,
-      "views": 0,
+      "views": 1,
       "tags": [
         "html",
         "css",
         "js"
+      ],
+      "comments": [
+        {
+          "id": "b337d9f0-65f2-4ad9-a2a5-6d32ccc7f86d",
+          "userId": "2604dac7-725d-4e4e-a255-accc2a4b72af",
+          "postId": "eefc3ca5-a2b3-4707-a584-b58e9fbf8fc2",
+          "comment": "Et expedita esse off"
+        }
       ]
     }
   ],
   "comments": [
-    {
-      "id": "be444f81-a968-4265-babc-700a40351870",
-      "userId": "2604dac7-725d-4e4e-a255-accc2a4b72af",
-      "postId": "aca1df43-75a3-4e0d-af4c-abe429dfe056",
-      "comment": "Maxime nesciunt ips"
-    },
     {
       "id": "a91fd920-9972-4686-8e2b-32b7435d3d43",
       "userId": "2604dac7-725d-4e4e-a255-accc2a4b72af",
@@ -113,16 +125,22 @@
       "comment": "Aut laboris error qu"
     },
     {
-      "id": "fe14e2a0-34fb-483a-8664-4da95e6474da",
-      "userId": "2604dac7-725d-4e4e-a255-accc2a4b72af",
-      "postId": "aca1df43-75a3-4e0d-af4c-abe429dfe056",
-      "comment": "Rerum nemo quis id "
-    },
-    {
       "id": "b337d9f0-65f2-4ad9-a2a5-6d32ccc7f86d",
       "userId": "2604dac7-725d-4e4e-a255-accc2a4b72af",
       "postId": "eefc3ca5-a2b3-4707-a584-b58e9fbf8fc2",
       "comment": "Et expedita esse off"
+    },
+    {
+      "id": "69c8dfd0-953f-41f7-8f21-a259fe6a7e58",
+      "userId": "fccf9f9d-b5ba-4d91-ba0d-4d38ca0a95d8",
+      "postId": "fce655ca-a4d8-449c-90f4-fde031026260",
+      "comment": "Id sint incidunt qu"
+    },
+    {
+      "id": "db652f9d-4b13-4f75-89a0-74b17d7cbd88",
+      "userId": "4c931a74-57e8-4962-b2ac-96fb05e11ac5",
+      "postId": "fce655ca-a4d8-449c-90f4-fde031026260",
+      "comment": "Incididunt recusanda"
     }
   ]
 }

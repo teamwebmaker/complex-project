@@ -6,10 +6,12 @@ import { _get_ } from './http.js';
 import { API_URL } from './config.js';
 
 window.addEventListener('DOMContentLoaded', async()=> {
+    let isAuth = false;
     if (localStorage.hasOwnProperty('admin')) {
         const [admin] = select('admin')
         $render(adminDashboard,_dashboardLogOut(admin))
         $render (actionsDashboard, _actionsDashboard({}))
+        isAuth = true;
     } else {
         $render(adminDashboard,_dashboardLogIn({}))
     }
@@ -17,7 +19,7 @@ window.addEventListener('DOMContentLoaded', async()=> {
     let postsList = await _get_(`${API_URL}/posts`)
     postsList = await Promise.all( postsList.map( async (post) => {
         const category = await _get_(`${API_URL}/categories/${post.categoryId}`)
-        return {...post, category: category.title }
+        return {...post, category: category.title, isAuth }
     }) )
 
     $render(posts, postsList

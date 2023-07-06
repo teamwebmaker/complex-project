@@ -1,0 +1,139 @@
+{
+    "categories": [
+      {
+        "id": "ba4fbb5b-e428-4ef1-b189-4b0f4d4eaef9",
+        "title": "culture"
+      },
+      {
+        "id": "16588d66-e5bc-40e0-a1da-eb1eed6fe22f",
+        "title": "science"
+      },
+      {
+        "id": "931448d8-bdb0-4481-8a1a-da5d7fbcb5ef",
+        "title": "politics"
+      },
+      {
+        "id": "02e0a265-4cbb-4e13-95ab-7cb7f9bf3c22",
+        "title": "economic"
+      },
+      {
+        "id": "52a6a9c6-6cd3-447d-bb5b-c637ca06e5ab",
+        "title": "sports"
+      },
+      {
+        "id": "6cb8763e-e85e-4f83-81a2-ed0852b214d7",
+        "title": "religion"
+      },
+      {
+        "id": "fc77fecd-b313-4b4b-a976-5dacd0a47c7b",
+        "title": "history"
+      }
+    ],
+    "users": [
+      {
+        "id": "bb4b283f-78f0-4f30-9033-7ab0c4c0e8cc",
+        "email": "bejaziqig@mailinator.com",
+        "password": "Pa$$w0rd!",
+        "posts": [
+
+        ]
+      },
+      {
+        "id": "2604dac7-725d-4e4e-a255-accc2a4b72af",
+        "email": "1111@gmail.com",
+        "password": "111111",
+        "posts": [
+            
+        ]
+      }
+    ],
+    "posts": [
+      {
+        "id": "aca1df43-75a3-4e0d-af4c-abe429dfe056",
+        "categoryId": "16588d66-e5bc-40e0-a1da-eb1eed6fe22f",
+        "title": "Exercitationem saepe",
+        "description": "Irure harum quia mai",
+        "rating": 0,
+        "views": 0,
+        "tags": [
+          "html",
+          "css",
+          "js"
+        ],
+        "comments": [
+            
+        ]
+      },
+      {
+        "id": "fce655ca-a4d8-449c-90f4-fde031026260",
+        "categoryId": "16588d66-e5bc-40e0-a1da-eb1eed6fe22f",
+        "title": "Sint ut consequatur",
+        "description": "Asperiores quae odio",
+        "rating": 0,
+        "views": 0,
+        "tags": [
+          "html",
+          "css",
+          "js"
+        ],
+        "comments": [
+            
+        ]
+      },
+      {
+        "id": "495c16a3-5813-4123-9760-238aa5367da6",
+        "categoryId": "931448d8-bdb0-4481-8a1a-da5d7fbcb5ef",
+        "title": "Illo error consequat",
+        "description": "Esse sapiente sit o",
+        "rating": 0,
+        "views": 0,
+        "tags": [
+          "html",
+          "css",
+          "js"
+        ],
+        "comments": [
+
+        ]
+      },
+      {
+        "id": "eefc3ca5-a2b3-4707-a584-b58e9fbf8fc2",
+        "categoryId": "fc77fecd-b313-4b4b-a976-5dacd0a47c7b",
+        "title": "Assumenda laboriosam",
+        "description": "Blanditiis similique",
+        "rating": 0,
+        "views": 0,
+        "tags": [
+          "html",
+          "css",
+          "js"
+        ],
+        "comments": [
+            "be444f81-a968-4265-babc-700a40351870"
+        ]
+
+      }
+    ],
+    "comments": [
+      {
+        "id": "be444f81-a968-4265-babc-700a40351870",
+        "userId": "2604dac7-725d-4e4e-a255-accc2a4b72af",
+        "comment": "Maxime nesciunt ips"
+      },
+      {
+        "id": "a91fd920-9972-4686-8e2b-32b7435d3d43",
+        "userId": "2604dac7-725d-4e4e-a255-accc2a4b72af",
+        "comment": "Aut laboris error qu"
+      },
+      {
+        "id": "fe14e2a0-34fb-483a-8664-4da95e6474da",
+        "userId": "2604dac7-725d-4e4e-a255-accc2a4b72af",
+        "comment": "Rerum nemo quis id "
+      },
+      {
+        "id": "b337d9f0-65f2-4ad9-a2a5-6d32ccc7f86d",
+        "userId": "2604dac7-725d-4e4e-a255-accc2a4b72af",
+        "comment": "Et expedita esse off"
+      }
+    ]
+  }

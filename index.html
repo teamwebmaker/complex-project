@@ -32,10 +32,21 @@
       .history{
         border-color: hsl(174, 100%, 24%);
       }
+      .dialog-box {
+          position: fixed;
+          right: 0;
+          top: 20vh;
+          width: min(100vw, 300px);
+      }
+      .delete-comment {
+        position: absolute;
+        top: 0;
+        right: 0;
+      }
     </style>
   </head>
 
- 
+
   <body>
     <div class="container">
       <div class="row">
@@ -111,7 +122,9 @@
       </form>
     </template>
 
+    <div class="dialog-box" id="dialog-box">
 
+    </div>
     <!-- Modal -->
 <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -131,7 +144,17 @@
     <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
     <script src="scripts/app.js" type="module"></script>
     <script type="module">
-      import { showModal, registration, authorization, createPost, storePost, CreateComment, storeComment, viewComments,  logOut} from './scripts/functions.js'
+      import { showModal, 
+              registration,
+              authorization, 
+              createPost, 
+              storePost, 
+              CreateComment, 
+              storeComment, 
+              viewComments,  
+              userMessage,
+              deleteComment,
+              logOut} from './scripts/functions.js'
       window.showModal = showModal
       window.registration = registration
       window.logOut = logOut
@@ -140,7 +163,9 @@
       window.storePost = storePost
       window.CreateComment = CreateComment
       window.storeComment = storeComment
-      window.viewComments = viewComments
+      window.viewComments = viewComments 
+      window.userMessage = userMessage
+      window.deleteComment = deleteComment
     </script>
   </body>
 </html>

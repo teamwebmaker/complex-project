@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
-    <link rel="stylesheet" href="styles/style.css" />
+    <link rel="stylesheet" href="styles/style.css?data=07.07.2023" />
     <link rel="shortcut icon" href="images/theme/comlpex_project.png" type="image/x-icon">
     <style>
       .culture{
@@ -110,6 +110,23 @@
         <button type="submit" class="btn btn-primary">Store Post</button>
       </form>
     </template>
+      <!-- Edit Post Templates -->
+      <template id="edit-post-template">
+        <form onsubmit="updatePost(event)">
+          <div class="mb-3">
+            <input type="title" class="form-control" placeholder="Title" name="title" />
+          </div>
+          <div class="mb-3">
+            <textarea class="form-control" placeholder="Description" name="description" rows="3"></textarea>
+          </div>
+          <div class="mb-3">
+            <select class="form-select" name="category_id" aria-label="Default select example"></select>
+          </div>
+          <input type="hidden" name="post_id">
+          
+          <button type="submit" class="btn btn-primary">Store Post</button>
+        </form>
+      </template>
     <!-- Create comment Templates -->
     <template id="create-comment-template">
       <form onsubmit="storeComment(event)">
@@ -125,6 +142,7 @@
     <div class="dialog-box" id="dialog-box">
 
     </div>
+    
     <!-- Modal -->
 <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -154,6 +172,10 @@
               viewComments,  
               userMessage,
               deleteComment,
+              showUserPosts,
+              deletePost,
+              editPost,
+              updatePost,
               logOut} from './scripts/functions.js'
       window.showModal = showModal
       window.registration = registration
@@ -166,6 +188,10 @@
       window.viewComments = viewComments 
       window.userMessage = userMessage
       window.deleteComment = deleteComment
+      window.showUserPosts = showUserPosts
+      window.deletePost = deletePost
+      window.editPost = editPost 
+      window.updatePost = updatePost
     </script>
   </body>
 </html>

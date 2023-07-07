@@ -19,7 +19,7 @@ const _dashboardLogIn = (_) => {
 const _dashboardLogOut = (_) => {
     const {id, email } = _
     return `<div class="btn-group" role="group" aria-label="Basic example" id="${id}">
-                <button type="button" class="btn btn-primary">${email}</button>
+                <button type="button" class="btn btn-primary" data-user-id="${id}" onclick="showUserPosts(this)">${email}</button>
                 <button type="button" class="btn btn-warning" onclick="logOut()">
                     <i class="bi bi-box-arrow-in-right"></i>
                 </button>
@@ -68,14 +68,17 @@ const _tag = (_) => {
  *          rating:number,
  *          tags:string[],
  *          category:string,
- *          isAuth: boolean}} _ 
+ *          isAuth: boolean,
+ *          showCommentBlock: boolean}} _ 
  * @returns {string} // HTML LAYOUT COMPONENT
  */
 const _post = (_) => {
-    const {id, title, description, views, rating, tags, category, isAuth} = _
+    const {id, title, description, views, rating, tags, category, isAuth, showCommentBlock} = _
     const tagsList = tags.map(tag => _tag({ id: $uuid(),title:tag }) ).join("")
     const commentAction = isAuth ? "CreateComment(this)" : "userMessage()"
-    return `<div class="card ${category}">
+    const commentsBlock = showCommentBlock ? [`<button type="button w-50" class="btn btn-success" data-post-id="${id}" data-template="" onclick="viewComments(this)">view comments</button>`, ` <button type="button w-50" class="btn btn-warning" data-post-id="${id}" data-template="create-comment" onclick="${commentAction}">add comment</button>`] : []
+
+    return `<div class="card ${category}" id="${id}">
     <div class="card-header">
         <h5 class="card-title">${title}</h5>
         <p class="card-description">${description}</p>
@@ -91,22 +94,21 @@ const _post = (_) => {
     </div>
     <div class="card-footer">
         <div class="btn-group w-100" role="group" aria-label="Basic example">
-            <button type="button w-50" class="btn btn-success" data-post-id="${id}" data-template="" onclick="viewComments(this)">view comments</button>
-            <button type="button w-50" class="btn btn-warning" data-post-id="${id}" data-template="create-comment" onclick="${commentAction}">add comment</button>
+            ${commentsBlock.join("")}
         </div>
     </div>
 </div>`
 }
 /**
- * 
+ * @param {string} tag
  * @param {string} content 
  * @param {string[]} classes 
  * @returns {string} // HTML LAYOUT COMPONENT
  */
-const _wrapped = (content, classes) => {
-    return `<div class="${classes.join(" ")}">
+const _wrapped = (tag, content, classes) => {
+    return `<${tag} class="${classes.join(" ")}">
                 ${content}
-            </div>`
+            </${tag}>`
 }
 /**
  * 
@@ -138,6 +140,20 @@ const _alert = (_) => {
                 ${message}
             </div>`
 }
+/**
+ * 
+ * @param {{ id: string,title: string }} _ 
+ * @returns 
+ */
+const _tableRow = (_) => {
+    const {id, title} = _
+    return `<tr id="${id}">
+                <th scope="col">#</th>
+                <th scope="col">${title}</th>
+                <th scope="col"><button type="button" class="btn btn-info" data-post-id="${id}" data-template="edit-post" onclick="editPost(this)"><i class="bi bi-pencil-square"></i></button></th>
+                <th scope="col"><button type="button" class="btn btn-danger" data-post-id="${id}" onclick="deletePost(this)"><i class="bi bi-trash3"></i></button></th>
+            </tr>`
+}
 
 export {
     _dashboardLogIn,
@@ -147,5 +163,6 @@ export {
     _post,
     _wrapped,
     _comment,
-    _alert
+    _alert,
+    _tableRow
 }

@@ -19,12 +19,12 @@ window.addEventListener('DOMContentLoaded', async()=> {
     let postsList = await _get_(`${API_URL}/posts`)
     postsList = await Promise.all( postsList.map( async (post) => {
         const category = await _get_(`${API_URL}/categories/${post.categoryId}`)
-        return {...post, category: category.title, isAuth }
+        return {...post, category: category.title, isAuth, showCommentBlock: true}
     }) )
 
     $render(posts, postsList
         .map(post => _post(post))
-        .map(post => _wrapped(post, ["col-lg-4", "col-md-2", "sm-6", "mb-4"])).join("")
+        .map(post => _wrapped("div", post, ["col-lg-4", "col-md-2", "sm-6", "mb-4"])).join("")
         )
     
 })

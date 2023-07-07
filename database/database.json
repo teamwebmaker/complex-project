@@ -31,116 +31,54 @@
   ],
   "users": [
     {
-      "id": "bb4b283f-78f0-4f30-9033-7ab0c4c0e8cc",
-      "email": "bejaziqig@mailinator.com",
-      "password": "Pa$$w0rd!"
-    },
-    {
-      "id": "2604dac7-725d-4e4e-a255-accc2a4b72af",
-      "email": "1111@gmail.com",
-      "password": "111111"
-    },
-    {
-      "id": "fccf9f9d-b5ba-4d91-ba0d-4d38ca0a95d8",
-      "email": "nufeh@mailinator.com",
-      "password": "Pa$$w0rd!"
-    },
-    {
-      "id": "4c931a74-57e8-4962-b2ac-96fb05e11ac5",
-      "email": "guxu@mailinator.com",
-      "password": "Pa$$w0rd!"
-    },
-    {
-      "id": "b6df0cdf-05ed-435e-8b6d-0b65f8937131",
-      "email": "lisilulazi@mailinator.com",
+      "id": "edbeb38f-c9ac-4929-bfdd-c251e94633f6",
+      "email": "xopeme@mailinator.com",
       "password": "Pa$$w0rd!"
     }
   ],
   "posts": [
     {
-      "id": "fce655ca-a4d8-449c-90f4-fde031026260",
-      "userId": "2604dac7-725d-4e4e-a255-accc2a4b72af",
-      "categoryId": "16588d66-e5bc-40e0-a1da-eb1eed6fe22f",
-      "title": "Sint ut consequatur",
-      "description": "Asperiores quae odio",
+      "id": "8c234679-4e59-49bb-973b-2014e9a16878",
+      "userId": "edbeb38f-c9ac-4929-bfdd-c251e94633f6",
+      "categoryId": "fc77fecd-b313-4b4b-a976-5dacd0a47c7b",
+      "title": "updatet title ;)",
+      "description": "Updated Description :)",
       "rating": 0,
-      "views": 5,
+      "views": 0,
       "tags": [
         "html",
         "css",
         "js"
-      ],
-      "comments": [
-        {
-          "id": "a91fd920-9972-4686-8e2b-32b7435d3d43",
-          "userId": "2604dac7-725d-4e4e-a255-accc2a4b72af",
-          "postId": "fce655ca-a4d8-449c-90f4-fde031026260",
-          "comment": "Aut laboris error qu"
-        }
       ]
     },
     {
-      "id": "495c16a3-5813-4123-9760-238aa5367da6",
-      "userId": "2604dac7-725d-4e4e-a255-accc2a4b72af",
+      "id": "6d9a445a-ba4f-4815-8565-e2346742b8e6",
+      "userId": "edbeb38f-c9ac-4929-bfdd-c251e94633f6",
       "categoryId": "931448d8-bdb0-4481-8a1a-da5d7fbcb5ef",
-      "title": "Illo error consequat",
-      "description": "Esse sapiente sit o",
+      "title": "ok",
+      "description": "ok",
       "rating": 0,
-      "views": 1,
+      "views": 0,
       "tags": [
         "html",
         "css",
         "js"
-      ],
-      "comments": []
+      ]
     },
     {
-      "id": "eefc3ca5-a2b3-4707-a584-b58e9fbf8fc2",
-      "userId": "2604dac7-725d-4e4e-a255-accc2a4b72af",
+      "id": "c8bb6997-6c95-4420-a672-c25b1e29b625",
+      "userId": "edbeb38f-c9ac-4929-bfdd-c251e94633f6",
       "categoryId": "fc77fecd-b313-4b4b-a976-5dacd0a47c7b",
-      "title": "Assumenda laboriosam",
-      "description": "Blanditiis similique",
+      "title": "In esse et fuga Mo",
+      "description": "Sed ut ea ut tempora",
       "rating": 0,
-      "views": 1,
+      "views": 0,
       "tags": [
         "html",
         "css",
         "js"
-      ],
-      "comments": [
-        {
-          "id": "b337d9f0-65f2-4ad9-a2a5-6d32ccc7f86d",
-          "userId": "2604dac7-725d-4e4e-a255-accc2a4b72af",
-          "postId": "eefc3ca5-a2b3-4707-a584-b58e9fbf8fc2",
-          "comment": "Et expedita esse off"
-        }
       ]
     }
   ],
-  "comments": [
-    {
-      "id": "a91fd920-9972-4686-8e2b-32b7435d3d43",
-      "userId": "2604dac7-725d-4e4e-a255-accc2a4b72af",
-      "postId": "fce655ca-a4d8-449c-90f4-fde031026260",
-      "comment": "Aut laboris error qu"
-    },
-    {
-      "id": "b337d9f0-65f2-4ad9-a2a5-6d32ccc7f86d",
-      "userId": "2604dac7-725d-4e4e-a255-accc2a4b72af",
-      "postId": "eefc3ca5-a2b3-4707-a584-b58e9fbf8fc2",
-      "comment": "Et expedita esse off"
-    },
-    {
-      "id": "69c8dfd0-953f-41f7-8f21-a259fe6a7e58",
-      "userId": "fccf9f9d-b5ba-4d91-ba0d-4d38ca0a95d8",
-      "postId": "fce655ca-a4d8-449c-90f4-fde031026260",
-      "comment": "Id sint incidunt qu"
-    },
-    {
-      "id": "db652f9d-4b13-4f75-89a0-74b17d7cbd88",
-      "userId": "4c931a74-57e8-4962-b2ac-96fb05e11ac5",
-      "postId": "fce655ca-a4d8-449c-90f4-fde031026260",
-      "comment": "Incididunt recusanda"
-    }
-  ]
+  "comments": []
 }

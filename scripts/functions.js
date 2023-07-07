@@ -4,7 +4,7 @@ import { modal, posts, dialogBox} from './dom.js'
 import { _post_, _get_, _update_, _delete_} from './http.js'
 import { API_URL } from './config.js' 
 import { insert, select } from './storage.js'
-import { _option, _post, _comment, _wrapped, _alert } from './components.js'
+import { _option, _post, _comment, _wrapped, _alert, _tableRow } from './components.js'
 
 const showModal = (e) => {
     const {template} = e.dataset
@@ -84,7 +84,7 @@ const storePost = async (e) => {
         e.target.reset()
         modalPopup.hide()
         const category = await _get_(`${API_URL}/categories/${post.categoryId}`)
-        $insertHtml(posts, _post({...post, category}))
+        $insertHtml(posts, 'afterbegin', _wrapped("div", _post({...post, category: category.title}), ["col-lg-4", "col-md-2", "sm-6", "mb-4"]))
     }
 }
 const CreateComment = async (e) => {
@@ -100,6 +100,7 @@ const CreateComment = async (e) => {
 
 const storeComment = async (e) => {
     e.preventDefault()
+    e.stopPropagation()
     const {post_id, comment} = e.target
     const [admin] = select('admin')
     const newComment = {
@@ -130,12 +131,13 @@ const viewComments = async (e) => {
     const children = [...modal?.querySelector(".modal-body").children]
     children.forEach((child) =>  child.remove())
 
-    const cardBody = _wrapped(_post(post), ["card-body"])
-    const cardFooter = _wrapped(commentsTemplates.join(""), ["card-footer"])
-    const card = _wrapped([cardBody, cardFooter].join(""), ["card"])
+    const cardBody = _wrapped("div", _post({...post, showCommentBlock: false}), ["card-body"])
+    const cardFooter = _wrapped("div", commentsTemplates.join(""), ["card-footer"])
+    const card = _wrapped("div", [cardBody, cardFooter].join(""), ["card"])
     
     $render(modal?.querySelector(".modal-body"), card)
     modalPopup.show()
+
 }
 const userMessage = () => {
     $render(dialogBox, _alert({id: $uuid(), status: "danger", message: "please log in if you want to add comment"}))
@@ -147,13 +149,71 @@ const userMessage = () => {
 const deleteComment = (e) => { 
     if(confirm(`Are you sure you want to delete this comment`)) {
         const {id} = e.dataset
+        e.disabled = true
         const url = `${API_URL}/comments/${id}`
-        if(_delete_(url)) {
-            $getById(id)?.remove() 
-        } 
+        if(_delete_(url)) $getById(id)?.remove() 
     }
 }
+const showUserPosts = async (e) => {
+    const {userId} = e.dataset
+    const url = `${API_URL}/users/${userId}?_embed=posts`
+    const user = await _get_(url)
+    const posts = user.posts.map((post) => _tableRow(post)).join("")
+    $render(modal?.querySelector(".modal-body"), _wrapped("table", posts, ["table"]))
+    modalPopup.show()
+}
+const deletePost = async (e) => {
+    if (confirm (`Are you sure you want to delete`)) { 
+        const {postId} = e.dataset
+        e.disabled = true
+        const url = `${API_URL}/posts/${postId}`
+        const result = await _delete_(url)
+        if(result) $getById(postId)?.remove()
+    }
+}
+const editPost = async (e) => {
+    const {postId, template} = e.dataset
+    const selector = [template , "template"].join("-")
+    const templateContent = $getTemplateContentById(selector)
+    const {title, description, category_id, post_id} = templateContent.querySelector("form")
+    const postUrl = `${API_URL}/posts/${postId}`
+    const post = await _get_(postUrl)
+    const categoriesUrl = `${API_URL}/categories`
+    const categories = await _get_(categoriesUrl)
+    const category = categories.find((category) => category.id === post.categoryId)
+    $render(category_id, categories.map((category) => _option({id:$uuid(), key:category.id, value:category.title })))
+    const children = [...modal?.querySelector(".modal-body").children]
+    children.forEach((child) =>  child.remove())
+    // TODO => Filling the form with the received data
+    title.value = post.title
+    description.value = post.description
+    category_id.value = category.id
+    post_id.value = postId
+    modal?.querySelector(".modal-body")?.appendChild(templateContent)
+    modalPopup.show()
+}
 
+const updatePost = async (e) => {
+    e.preventDefault()
+    const { category_id, title, description, post_id} = e.target 
+    const post = await _get_(`${API_URL}/posts/${post_id.value}`)
+    const updatedPost = {
+        ...post, 
+        categoryId : category_id.value.trim(),
+        title : title.value.trim(),
+        description : description.value.trim(),
+    }
+    const result = await _update_(`${API_URL}/posts/${post_id.value}`, updatedPost )
+    if(result)  {
+        const oldComponent = $getById(post_id.value)
+        oldComponent?.classList.add("d-none")
+        const category = await _get_(`${API_URL}/categories/${category_id.value.trim()}`)
+        $insertHtml(oldComponent, 'beforebegin', _post( {...updatedPost, category: category.title, isAuth:true, showCommentBlock: true}) )
+        oldComponent?.remove()
+        e.target.reset()
+        modalPopup.hide()
+    }
+}
 const logOut = () => { 
     localStorage.removeItem("admin")
     window.location.reload()
@@ -170,6 +230,10 @@ export {
     viewComments,
     userMessage,
     deleteComment,
+    showUserPosts,
+    deletePost,
+    editPost,
+    updatePost,
     logOut,
     
 } 

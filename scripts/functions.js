@@ -1,5 +1,5 @@
 import { modalPopup } from './services.js'
-import { $getTemplateContentById, $render, $uuid, $insertHtml, $getById} from './helpers.js'
+import { $getTemplateContentById, $render, $uuid, $insertHtml, $getById, urlBuilder} from './helpers.js'
 import { modal, posts, dialogBox} from './dom.js'
 import { _post_, _get_, _update_, _delete_} from './http.js'
 import { API_URL } from './config.js' 
@@ -118,7 +118,8 @@ const storeComment = async (e) => {
 }
 const viewComments = async (e) => {
     const {postId} = e.dataset
-    const url = `${API_URL}/posts/${postId}?_embed=comments`
+    const url = urlBuilder(`${API_URL}/posts/${postId}`, {_embed: "comments"})
+    // const url = `${API_URL}/posts/${postId}?_embed=comments`
     const post = await _get_(url)
 
     const comments = await Promise.all( post.comments.map( async (comment) => {
@@ -156,7 +157,8 @@ const deleteComment = (e) => {
 }
 const showUserPosts = async (e) => {
     const {userId} = e.dataset
-    const url = `${API_URL}/users/${userId}?_embed=posts`
+    const url = urlBuilder(`${API_URL}/users/${userId}`, {_embed: "posts"})
+    // const url = `${API_URL}/users/${userId}?_embed=posts`
     const user = await _get_(url)
     const posts = user.posts.map((post) => _tableRow(post)).join("")
     $render(modal?.querySelector(".modal-body"), _wrapped("table", posts, ["table"]))
@@ -219,6 +221,45 @@ const logOut = () => {
     window.location.reload()
 }
 
+const filtered = async (e) => {
+    const categoryId = e.value
+    let isAuth = false;
+    let allPosts = []
+    if (localStorage.hasOwnProperty('admin')) isAuth = true
+    if (categoryId === "all"){
+        const postsUrl = `${API_URL}/posts`
+        allPosts = await _get_(postsUrl)
+    } else {
+        const categoryUrl = urlBuilder(`${API_URL}/categories/${categoryId}`, {_embed: "posts"})
+        // const categoryUrl = `${API_URL}/categories/${categoryId}?_embed=posts`
+        const category = await _get_(categoryUrl)
+        allPosts = category.posts
+    }
+    const postsList = await Promise.all( allPosts.map( async (post) => {
+        const category = await _get_(`${API_URL}/categories/${post.categoryId}`)
+        return {...post, category: category.title, isAuth, showCommentBlock: true}
+    }) )
+    $render(posts, postsList
+        .map(post => _post(post))
+        .map(post => _wrapped("div", post, ["col-lg-4", "col-md-2", "sm-6", "mb-4"])).join("")
+        )
+}
+const sorted = async (e) => {
+    const order = e.value
+    let isAuth = false;
+    if (localStorage.hasOwnProperty('admin')) isAuth = true
+    const categoryUrl = urlBuilder(`${API_URL}/posts`, { _sort: "views", _order: order })
+    // const url = `${API_URL}/posts?_sort=views&_order=${order}`
+    let postsList = await _get_(categoryUrl)
+    postsList = await Promise.all( postsList.map( async (post) => {
+    const category = await _get_(`${API_URL}/categories/${post.categoryId}`)
+        return {...post, category: category.title, isAuth, showCommentBlock: true}
+    }))
+    $render(posts, postsList
+        .map(post => _post(post))
+        .map(post => _wrapped("div", post, ["col-lg-4", "col-md-2", "sm-6", "mb-4"])).join("")
+        )
+}
 export { 
     showModal, 
     registration,
@@ -235,5 +276,7 @@ export {
     editPost,
     updatePost,
     logOut,
+    filtered,
+    sorted
     
 } 

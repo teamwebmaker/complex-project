@@ -15,8 +15,23 @@ const isJson = (str) => {
     }
     return true;
 }
+/**
+ * 
+ * @param {String} baseUrl 
+ * @param {Object} params
+ * @returns {String}
+ */
+const urlBuilder = (baseUrl, params) => {
+    const options = Object.entries(params)
+    const  url = new URL(baseUrl);
+    options.forEach((option) => {
+        const [key, value] = option
+        url.searchParams.set(key, value);
+    })
+    return url.toString()
+}
 export {
-    $getById, $qsAll, $qs, $insertHtml, $render, $getTemplateContentById, $uuid, isJson
+    $getById, $qsAll, $qs, $insertHtml, $render, $getTemplateContentById, $uuid, isJson, urlBuilder 
 }
 
 

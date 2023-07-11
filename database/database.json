@@ -53,13 +53,16 @@
       "categoryId": "fc77fecd-b313-4b4b-a976-5dacd0a47c7b",
       "title": "updatet title ;)",
       "description": "Updated Description :)",
-      "rating": 0,
-      "views": 5,
+      "rating": 3,
+      "views": 30,
       "tags": [
         "html",
         "css",
         "js"
-      ]
+      ],
+      "isAuth": true,
+      "category": "history",
+      "showCommentBlock": true
     },
     {
       "id": "6d9a445a-ba4f-4815-8565-e2346742b8e6",
@@ -67,13 +70,16 @@
       "categoryId": "931448d8-bdb0-4481-8a1a-da5d7fbcb5ef",
       "title": "ok",
       "description": "ok",
-      "rating": 0,
-      "views": 10,
+      "rating": 5,
+      "views": 50,
       "tags": [
         "html",
         "css",
         "js"
-      ]
+      ],
+      "isAuth": true,
+      "category": "politics",
+      "showCommentBlock": true
     },
     {
       "id": "c8bb6997-6c95-4420-a672-c25b1e29b625",
@@ -81,13 +87,16 @@
       "categoryId": "fc77fecd-b313-4b4b-a976-5dacd0a47c7b",
       "title": "In esse et fuga Mo",
       "description": "Sed ut ea ut tempora",
-      "rating": 0,
-      "views": 99,
+      "rating": 10,
+      "views": 102,
       "tags": [
         "html",
         "css",
         "js"
-      ]
+      ],
+      "isAuth": true,
+      "category": "history",
+      "showCommentBlock": true
     },
     {
       "id": "36cf812f-ce2e-4585-b523-228d67245da6",
@@ -95,13 +104,16 @@
       "categoryId": "ba4fbb5b-e428-4ef1-b189-4b0f4d4eaef9",
       "title": "Doloribus deserunt i",
       "description": "Iusto dolor eum sequ",
-      "rating": 0,
-      "views": 50,
+      "rating": 4,
+      "views": 41,
       "tags": [
         "html",
         "css",
         "js"
-      ]
+      ],
+      "isAuth": true,
+      "category": "culture",
+      "showCommentBlock": true
     },
     {
       "id": "9d7a444d-fe30-4ccf-984d-97ef4dcac9f4",
@@ -110,12 +122,15 @@
       "title": "Incidunt eu in labo",
       "description": "Ipsam ut fuga Repud",
       "rating": 0,
-      "views": 70,
+      "views": 0,
       "tags": [
         "html",
         "css",
         "js"
-      ]
+      ],
+      "isAuth": true,
+      "category": "sports",
+      "showCommentBlock": true
     },
     {
       "id": "1cfb6922-c5f5-440d-b46b-228d0afeb7e4",
@@ -123,13 +138,16 @@
       "categoryId": "52a6a9c6-6cd3-447d-bb5b-c637ca06e5ab",
       "title": "Dolor non praesentiu",
       "description": "Sit ea in est et ad",
-      "rating": 0,
-      "views": 120,
+      "rating": 1,
+      "views": 14,
       "tags": [
         "html",
         "css",
         "js"
-      ]
+      ],
+      "isAuth": true,
+      "category": "sports",
+      "showCommentBlock": true
     },
     {
       "id": "150cb6a9-5a9b-4e56-814d-24e8228ff408",
@@ -138,12 +156,15 @@
       "title": "Officiis dolore nesc",
       "description": "Tempora dolores unde",
       "rating": 0,
-      "views": 150,
+      "views": 0,
       "tags": [
         "html",
         "css",
         "js"
-      ]
+      ],
+      "isAuth": true,
+      "category": "religion",
+      "showCommentBlock": true
     }
   ],
   "comments": [

@@ -1,8 +1,8 @@
+import { API_URL, RATING_INTERVAL} from './config.js' 
 import { modalPopup } from './services.js'
-import { $getTemplateContentById, $render, $uuid, $insertHtml, $getById, urlBuilder} from './helpers.js'
+import { $getTemplateContentById, $render, $uuid, $insertHtml, $getById, urlBuilder, $renderFragment} from './helpers.js'
 import { modal, posts, dialogBox} from './dom.js'
 import { _post_, _get_, _update_, _delete_} from './http.js'
-import { API_URL } from './config.js' 
 import { insert, select } from './storage.js'
 import { _option, _post, _comment, _wrapped, _alert, _tableRow } from './components.js'
 
@@ -10,9 +10,10 @@ const showModal = (e) => {
     const {template} = e.dataset
     const selector = [template , "template"].join("-")
     const templateContent = $getTemplateContentById(selector)
-    const children = [...modal?.querySelector(".modal-body").children]
-    children.forEach((child) =>  child.remove())
-    modal?.querySelector(".modal-body")?.appendChild(templateContent)
+    $renderFragment(modal?.querySelector(".modal-body"), templateContent)
+    // const children = [...modal?.querySelector(".modal-body").children]
+    // children.forEach((child) =>  child.remove())
+    // modal?.querySelector(".modal-body")?.appendChild(templateContent)
     modalPopup.show()
     
 }
@@ -60,9 +61,7 @@ const createPost = async (e) => {
     const selector = [template , "template"].join("-")
     const templateContent = $getTemplateContentById(selector)
     $render(templateContent.querySelector('select'), categories.map((category) => _option({id:$uuid(), key:category.id, value:category.title })))
-    const children = [...modal?.querySelector(".modal-body").children]
-    children.forEach((child) =>  child.remove())
-    modal?.querySelector(".modal-body")?.appendChild(templateContent)
+    $renderFragment(modal?.querySelector(".modal-body"), templateContent)
     modalPopup.show()
 }
 
@@ -92,9 +91,7 @@ const CreateComment = async (e) => {
     const selector = [template , "template"].join("-")
     const templateContent = $getTemplateContentById(selector)
     templateContent.querySelector('[name="post_id"]').value = postId
-    const children = [...modal?.querySelector(".modal-body").children]
-    children.forEach((child) =>  child.remove())
-    modal?.querySelector(".modal-body")?.appendChild(templateContent)
+    $renderFragment(modal?.querySelector(".modal-body"), templateContent)
     modalPopup.show()
 }
 
@@ -118,10 +115,11 @@ const storeComment = async (e) => {
 }
 const viewComments = async (e) => {
     const {postId} = e.dataset
-    const url = urlBuilder(`${API_URL}/posts/${postId}`, {_embed: "comments"})
+    const baseUrl = `${API_URL}/posts/${postId}`
+    const url = urlBuilder(baseUrl, {_embed: "comments"})
     // const url = `${API_URL}/posts/${postId}?_embed=comments`
     const post = await _get_(url)
-
+    
     const comments = await Promise.all( post.comments.map( async (comment) => {
         const user = await _get_(`${API_URL}/users/${comment.userId}`)
         return {...comment, email: user.email }
@@ -129,16 +127,26 @@ const viewComments = async (e) => {
     const admin = localStorage.hasOwnProperty('admin') ? select('admin')[0] : null
     
     const commentsTemplates = comments.map((comment) => _comment({...comment, admin}))
-    const children = [...modal?.querySelector(".modal-body").children]
-    children.forEach((child) =>  child.remove())
-
     const cardBody = _wrapped("div", _post({...post, showCommentBlock: false}), ["card-body"])
     const cardFooter = _wrapped("div", commentsTemplates.join(""), ["card-footer"])
     const card = _wrapped("div", [cardBody, cardFooter].join(""), ["card"])
     
     $render(modal?.querySelector(".modal-body"), card)
     modalPopup.show()
-
+    //TODO => views
+    const category = await _get_(`${API_URL}/categories/${post.categoryId}`)
+    delete post.comments
+    let isAuth = false;
+    if (localStorage.hasOwnProperty('admin')) isAuth = true
+    const updatedPost = {...post, isAuth, category: category.title, showCommentBlock: true, views: post.views + 1, rating: setRating(post.views + 1, RATING_INTERVAL)}
+    const result = await _update_(baseUrl, updatedPost)
+    if(result) {
+        const updatedComponent = $getById(postId)
+        updatedComponent?.classList.add("d-none")
+        const newComponent = _post(updatedPost)
+        $insertHtml(updatedComponent, "afterend", newComponent)
+        updatedComponent?.remove()
+    }
 }
 const userMessage = () => {
     $render(dialogBox, _alert({id: $uuid(), status: "danger", message: "please log in if you want to add comment"}))
@@ -184,14 +192,12 @@ const editPost = async (e) => {
     const categories = await _get_(categoriesUrl)
     const category = categories.find((category) => category.id === post.categoryId)
     $render(category_id, categories.map((category) => _option({id:$uuid(), key:category.id, value:category.title })))
-    const children = [...modal?.querySelector(".modal-body").children]
-    children.forEach((child) =>  child.remove())
     // TODO => Filling the form with the received data
     title.value = post.title
     description.value = post.description
     category_id.value = category.id
     post_id.value = postId
-    modal?.querySelector(".modal-body")?.appendChild(templateContent)
+    $renderFragment(modal?.querySelector(".modal-body"), templateContent)
     modalPopup.show()
 }
 
@@ -259,6 +265,21 @@ const sorted = async (e) => {
         .map(post => _post(post))
         .map(post => _wrapped("div", post, ["col-lg-4", "col-md-2", "sm-6", "mb-4"])).join("")
         )
+}
+const setRating = (views, interval) => {
+    const ratingIndex = views / interval
+    let rating = 0
+    if(ratingIndex >= 1) rating = 1
+    if(ratingIndex >= 2) rating = 2
+    if(ratingIndex >= 3) rating = 3
+    if(ratingIndex >= 4) rating = 4
+    if(ratingIndex >= 5) rating = 5
+    if(ratingIndex >= 6) rating = 6
+    if(ratingIndex >= 7) rating = 7
+    if(ratingIndex >= 8) rating = 8
+    if(ratingIndex >= 9) rating = 9
+    if(ratingIndex >= 10) rating = 10
+    return rating
 }
 export { 
     showModal, 

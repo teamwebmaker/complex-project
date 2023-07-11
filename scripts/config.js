@@ -10,6 +10,10 @@ const PRE_PAGE = 4
  * @type {Number}
  */
 const TOTAL = 100
+/**
+ * @type{Number}
+ */
+const RATING_INTERVAL = 10
 
 const COLLECTIONS = [
     {
@@ -25,5 +29,6 @@ export {
     API_URL,
     PRE_PAGE,
     TOTAL,
-    COLLECTIONS
+    COLLECTIONS,
+    RATING_INTERVAL
 }

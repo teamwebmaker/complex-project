@@ -1,8 +1,7 @@
 import { select } from './storage.js';
 import {_dashboardLogIn, _dashboardLogOut, _actionsDashboard, _post, _wrapped, _option } from './components.js';
-import { $render, $uuid, $insertHtml} from './helpers.js';
-import { adminDashboard, actionsDashboard, posts, category
-} from './dom.js';
+import { $render, $uuid, $insertHtml, urlBuilder} from './helpers.js';
+import { adminDashboard, actionsDashboard, posts, category, ratingPosts} from './dom.js';
 import { _get_ } from './http.js';
 import { API_URL } from './config.js';
 
@@ -33,5 +32,18 @@ window.addEventListener('DOMContentLoaded', async()=> {
         .map(post => _post(post))
         .map(post => _wrapped("div", post, ["col-lg-4", "col-md-2", "sm-6", "mb-4"])).join("")
         )
+    // TODO => get rating posts
+    const ratingPostsUrl = urlBuilder(`${API_URL}/posts`,{ _sort: `rating`, _order: `desc`, _limit:3})
+    let ratingLimitedPosts = await _get_(ratingPostsUrl)
+        ratingLimitedPosts = await Promise.all( ratingLimitedPosts.map( async (post) => {
+        const category = await _get_(`${API_URL}/categories/${post.categoryId}`)
+        return {...post, category: category.title, isAuth, showCommentBlock: true}
+    }) )
+
+    $render(ratingPosts , ratingLimitedPosts
+        .map(post => _post(post))
+        .map(post => _wrapped("div", post, ["col-lg-4", "col-md-2", "sm-6", "mb-4"])).join("")
+        )
     
+
 })

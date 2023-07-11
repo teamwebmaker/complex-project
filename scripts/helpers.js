@@ -30,8 +30,18 @@ const urlBuilder = (baseUrl, params) => {
     })
     return url.toString()
 }
+/**
+ * 
+ *  @param {HTMLElement} element 
+ * @param {HTMLIFrameElement} fragment
+ */
+const $renderFragment = (element, fragment) => {
+    const children = [...element.children]
+    children.forEach((child) =>  child.remove())
+    element.appendChild(fragment)
+}
 export {
-    $getById, $qsAll, $qs, $insertHtml, $render, $getTemplateContentById, $uuid, isJson, urlBuilder 
+    $getById, $qsAll, $qs, $insertHtml, $render, $getTemplateContentById, $uuid, isJson, urlBuilder, $renderFragment 
 }
 
 

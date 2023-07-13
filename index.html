@@ -70,9 +70,19 @@
           </select>
         </div>
       </div>
+      <div class="row p-4" data-row="search">
+        <div class="input-group mb-3">
+          <button class="btn btn-outline-secondary" type="button" onclick="search(this)" >search</button>
+          <input type="text" class="form-control" placeholder="" id="search-field" >
+        </div>
+      </div>
       <div class="row p-4" id="posts" data-row="posts"></div>
       <h1 class="title">Rating Posts</h1>
       <div class="row p-4" id="rating-posts" data-row="rating-posts"></div>
+
+      <h1 class="title">last add posts</h1>
+      <div class="row p-4" id="last-posts" data-row="last-posts"></div>
+
     </div>
 
     <!-- Templates -->
@@ -180,7 +190,7 @@
               CreateComment, 
               storeComment, 
               viewComments,  
-              userMessage,
+              componentAlert,
               deleteComment,
               showUserPosts,
               deletePost,
@@ -188,7 +198,8 @@
               updatePost,
               logOut,
               filtered,
-              sorted} from './scripts/functions.js'
+              sorted,
+              search} from './scripts/functions.js'
       window.showModal = showModal
       window.registration = registration
       window.logOut = logOut
@@ -198,7 +209,7 @@
       window.CreateComment = CreateComment
       window.storeComment = storeComment
       window.viewComments = viewComments 
-      window.userMessage = userMessage
+      window.componentAlert = componentAlert
       window.deleteComment = deleteComment
       window.showUserPosts = showUserPosts
       window.deletePost = deletePost
@@ -206,6 +217,7 @@
       window.updatePost = updatePost
       window.filtered = filtered
       window.sorted = sorted
+      window.search = search
     </script>
   </body>
 </html>

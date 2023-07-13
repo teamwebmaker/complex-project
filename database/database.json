@@ -44,6 +44,11 @@
       "id": "8cab0222-1138-4d9b-b9d7-ccd04efdf397",
       "email": "dalofucec@mailinator.com",
       "password": "Pa$$w0rd!"
+    },
+    {
+      "id": "5804d467-22dc-4634-8183-76eb6b685caa",
+      "email": "jacuzic@mailinator.com",
+      "password": "Pa$$w0rd!"
     }
   ],
   "posts": [
@@ -165,6 +170,34 @@
       "isAuth": true,
       "category": "religion",
       "showCommentBlock": true
+    },
+    {
+      "id": "b240d30d-e6d2-4a56-b939-8755ec200e0d",
+      "userId": "5804d467-22dc-4634-8183-76eb6b685caa",
+      "categoryId": "ba4fbb5b-e428-4ef1-b189-4b0f4d4eaef9",
+      "title": "Et quia modi minim s",
+      "description": "Distinctio Soluta m",
+      "rating": 0,
+      "views": 0,
+      "tags": [
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "id": "6271db59-7e40-45d6-a511-caaef4f1d505",
+      "userId": "5804d467-22dc-4634-8183-76eb6b685caa",
+      "categoryId": "fc77fecd-b313-4b4b-a976-5dacd0a47c7b",
+      "title": "Placeat quia labori",
+      "description": "Natus qui eum molest",
+      "rating": 0,
+      "views": 0,
+      "tags": [
+        "html",
+        "css",
+        "js"
+      ]
     }
   ],
   "comments": [

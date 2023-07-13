@@ -1,7 +1,7 @@
 import { select } from './storage.js';
 import {_dashboardLogIn, _dashboardLogOut, _actionsDashboard, _post, _wrapped, _option } from './components.js';
 import { $render, $uuid, $insertHtml, urlBuilder} from './helpers.js';
-import { adminDashboard, actionsDashboard, posts, category, ratingPosts} from './dom.js';
+import { adminDashboard, actionsDashboard, posts, category, ratingPosts, lastPosts} from './dom.js';
 import { _get_ } from './http.js';
 import { API_URL } from './config.js';
 
@@ -44,6 +44,17 @@ window.addEventListener('DOMContentLoaded', async()=> {
         .map(post => _post(post))
         .map(post => _wrapped("div", post, ["col-lg-4", "col-md-2", "sm-6", "mb-4"])).join("")
         )
-    
+
+        const lastPostsUrl = urlBuilder(`${API_URL}/posts`,{ _start: postsList.length-3, _end: postsList.length,})
+    let lastPostsCollection = await _get_(lastPostsUrl)
+    lastPostsCollection = await Promise.all( lastPostsCollection.map( async (post) => {
+        const category = await _get_(`${API_URL}/categories/${post.categoryId}`)
+        return {...post, category: category.title, isAuth, showCommentBlock: true}
+    }) )
+
+    $render(lastPosts , lastPostsCollection
+        .map(post => _post(post))
+        .map(post => _wrapped("div", post, ["col-lg-4", "col-md-2", "sm-6", "mb-4"])).join("")
+        )
 
 })

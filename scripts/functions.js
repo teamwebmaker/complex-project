@@ -1,10 +1,10 @@
 import { API_URL, RATING_INTERVAL} from './config.js' 
 import { modalPopup } from './services.js'
 import { $getTemplateContentById, $render, $uuid, $insertHtml, $getById, urlBuilder, $renderFragment} from './helpers.js'
-import { modal, posts, dialogBox} from './dom.js'
+import { modal, posts, dialogBox, searchField} from './dom.js'
 import { _post_, _get_, _update_, _delete_} from './http.js'
 import { insert, select } from './storage.js'
-import { _option, _post, _comment, _wrapped, _alert, _tableRow } from './components.js'
+import { _option, _post, _comment, _wrapped, _alert, _tableRow, _spinner  } from './components.js'
 
 const showModal = (e) => {
     const {template} = e.dataset
@@ -15,7 +15,7 @@ const showModal = (e) => {
     // children.forEach((child) =>  child.remove())
     // modal?.querySelector(".modal-body")?.appendChild(templateContent)
     modalPopup.show()
-    
+
 }
 
 const registration = async (e) => {
@@ -148,13 +148,21 @@ const viewComments = async (e) => {
         updatedComponent?.remove()
     }
 }
-const userMessage = () => {
-    $render(dialogBox, _alert({id: $uuid(), status: "danger", message: "please log in if you want to add comment"}))
+/**
+ * 
+ * @param {{ id: string, status: string, message: string}} _ 
+ */
+const displayMessage = (_) => {
+    const {id, status, message} = _
+    $render(dialogBox, _alert({id, status, message}))
     setTimeout(()=> {
         $render(dialogBox, "")
     }, 3000)
 }
 
+const componentAlert = () => {
+    displayMessage({id: $uuid(), status: "danger", message: "Please Auth for Comment This post"})
+}
 const deleteComment = (e) => { 
     if(confirm(`Are you sure you want to delete this comment`)) {
         const {id} = e.dataset
@@ -281,6 +289,40 @@ const setRating = (views, interval) => {
     if(ratingIndex >= 10) rating = 10
     return rating
 }
+
+const search = async (e) =>{
+    e.disabled = true
+    $render(e, _spinner({id:$uuid(), status:"primary" }))
+    const searchValue = searchField?.value.trim() 
+    setTimeout(async () => {
+        if(searchValue.length >= 3){
+            let isAuth = false;
+            if (localStorage.hasOwnProperty('admin'))isAuth = true;
+            const searchUrl = urlBuilder(`${API_URL}/posts`, {q:searchValue})
+            let postsList = await _get_(searchUrl)
+            if(postsList.length){
+                postsList = await Promise.all( postsList.map( async (post) => {
+                const category = await _get_(`${API_URL}/categories/${post.categoryId}`)
+                    return {...post, category: category.title, isAuth, showCommentBlock: true}
+                }) )
+        
+                $render(posts, postsList
+                    .map(post => _post(post))
+                    .map(post => _wrapped("div", post, ["col-lg-4", "col-md-2", "sm-6", "mb-4"])).join("")
+                    )
+                }else{
+                    displayMessage({id:$uuid(), status:"warning", message:"This word dose not match any post" })
+            }
+    
+        }else{
+            displayMessage({id:$uuid(), status:"warning", message:"please insert 3 simbols for search" })
+        }
+        e.disabled = false
+        $render(e,"search")
+
+    }, 1000)
+}
+
 export { 
     showModal, 
     registration,
@@ -289,8 +331,8 @@ export {
     storePost,
     storeComment,
     CreateComment,
+    componentAlert,
     viewComments,
-    userMessage,
     deleteComment,
     showUserPosts,
     deletePost,
@@ -298,6 +340,7 @@ export {
     updatePost,
     logOut,
     filtered,
-    sorted
+    sorted,
+    search,
     
 } 

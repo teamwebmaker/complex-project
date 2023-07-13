@@ -1,6 +1,17 @@
 import { $uuid } from "./helpers.js"
 
 /**
+ * @param {{id :string, status: string} }  
+ *  
+ */
+const _spinner = (_) => {
+    const {id, status} = _
+    return `<div class="spinner-border text-${status}" role="status" id="${id}" style="--bs-spinner-width:1rem; --bs-spinner-height: 1rem;">
+                <span class="visually-hidden">Loading...</span>
+            </div>`
+}
+
+/**
  * 
  * @param {object} _ 
  * @returns {string} // HTML LAYOUT COMPONENT
@@ -75,7 +86,7 @@ const _tag = (_) => {
 const _post = (_) => {
     const {id, title, description, views, rating, tags, category, isAuth, showCommentBlock} = _
     const tagsList = tags.map(tag => _tag({ id: $uuid(),title:tag }) ).join("")
-    const commentAction = isAuth ? "CreateComment(this)" : "userMessage()"
+    const commentAction = isAuth ? "CreateComment(this)" : "componentAlert()"
     const commentsBlock = showCommentBlock ? [`<button type="button w-50" class="btn btn-success" data-post-id="${id}" data-template="" onclick="viewComments(this)">view comments</button>`, ` <button type="button w-50" class="btn btn-warning" data-post-id="${id}" data-template="create-comment" onclick="${commentAction}">add comment</button>`] : []
 
     return `<div class="card ${category}" id="${id}">
@@ -164,5 +175,6 @@ export {
     _wrapped,
     _comment,
     _alert,
-    _tableRow
+    _tableRow,
+    _spinner 
 }

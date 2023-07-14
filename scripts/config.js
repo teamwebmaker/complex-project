@@ -5,7 +5,7 @@ const API_URL =  'http://localhost:3000'
 /**
  * @type {Number}
  */
-const PRE_PAGE = 4
+const PRE_PAGE = 3
 /**
  * @type {Number}
  */
@@ -25,10 +25,15 @@ const COLLECTIONS = [
         value: []
     }
 ]
+const LANGUAGES = [
+    'en',
+    'ka'
+]
 export {
     API_URL,
     PRE_PAGE,
     TOTAL,
     COLLECTIONS,
-    RATING_INTERVAL
+    RATING_INTERVAL,
+    LANGUAGES
 }

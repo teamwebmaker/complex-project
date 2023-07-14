@@ -4,13 +4,21 @@ import { $uuid } from "./helpers.js"
  * @param {{id :string, status: string} }  
  *  
  */
+
 const _spinner = (_) => {
     const {id, status} = _
     return `<div class="spinner-border text-${status}" role="status" id="${id}" style="--bs-spinner-width:1rem; --bs-spinner-height: 1rem;">
                 <span class="visually-hidden">Loading...</span>
             </div>`
 }
-
+/**
+ * 
+ * @param {{id:string , page: number} } _ 
+ */
+const _page = (_) => {
+    const {id, page} = _
+    return `<button type="button" class="btn btn-outline-primary" id="${id}" data-page="${page}" onclick="paginate(this)">${page}</button>`
+}
 /**
  * 
  * @param {object} _ 
@@ -80,19 +88,20 @@ const _tag = (_) => {
  *          tags:string[],
  *          category:string,
  *          isAuth: boolean,
- *          showCommentBlock: boolean}} _ 
+ *          showCommentBlock: boolean
+ *          language: string}} _ 
  * @returns {string} // HTML LAYOUT COMPONENT
  */
 const _post = (_) => {
-    const {id, title, description, views, rating, tags, category, isAuth, showCommentBlock} = _
+    const {id, title, description, views, rating, tags, category, isAuth, showCommentBlock, language} = _
     const tagsList = tags.map(tag => _tag({ id: $uuid(),title:tag }) ).join("")
     const commentAction = isAuth ? "CreateComment(this)" : "componentAlert()"
     const commentsBlock = showCommentBlock ? [`<button type="button w-50" class="btn btn-success" data-post-id="${id}" data-template="" onclick="viewComments(this)">view comments</button>`, ` <button type="button w-50" class="btn btn-warning" data-post-id="${id}" data-template="create-comment" onclick="${commentAction}">add comment</button>`] : []
 
     return `<div class="card ${category}" id="${id}">
     <div class="card-header">
-        <h5 class="card-title">${title}</h5>
-        <p class="card-description">${description}</p>
+        <h5 class="card-title">${title[language]}</h5>
+        <p class="card-description">${description[language]}</p>
     </div>
     <div class="card-body">
         <ul class="list-group">
@@ -176,5 +185,6 @@ export {
     _comment,
     _alert,
     _tableRow,
-    _spinner 
+    _spinner,
+    _page
 }

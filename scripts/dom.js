@@ -9,6 +9,7 @@ const category = $getById("category");
 const ratingPosts = $getById("rating-posts")
 const lastPosts = $getById("last-posts")
 const searchField = $getById("search-field")
+const pagination = $getById("pagination")
 
 export {
     modal, 
@@ -19,5 +20,6 @@ export {
     category,
     ratingPosts,
     lastPosts,
-    searchField
+    searchField,
+    pagination
 }

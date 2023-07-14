@@ -53,130 +53,17 @@
   ],
   "posts": [
     {
-      "id": "8c234679-4e59-49bb-973b-2014e9a16878",
-      "userId": "edbeb38f-c9ac-4929-bfdd-c251e94633f6",
-      "categoryId": "fc77fecd-b313-4b4b-a976-5dacd0a47c7b",
-      "title": "updatet title ;)",
-      "description": "Updated Description :)",
-      "rating": 3,
-      "views": 30,
-      "tags": [
-        "html",
-        "css",
-        "js"
-      ],
-      "isAuth": true,
-      "category": "history",
-      "showCommentBlock": true
-    },
-    {
-      "id": "6d9a445a-ba4f-4815-8565-e2346742b8e6",
-      "userId": "edbeb38f-c9ac-4929-bfdd-c251e94633f6",
-      "categoryId": "931448d8-bdb0-4481-8a1a-da5d7fbcb5ef",
-      "title": "ok",
-      "description": "ok",
-      "rating": 5,
-      "views": 50,
-      "tags": [
-        "html",
-        "css",
-        "js"
-      ],
-      "isAuth": true,
-      "category": "politics",
-      "showCommentBlock": true
-    },
-    {
-      "id": "c8bb6997-6c95-4420-a672-c25b1e29b625",
-      "userId": "edbeb38f-c9ac-4929-bfdd-c251e94633f6",
-      "categoryId": "fc77fecd-b313-4b4b-a976-5dacd0a47c7b",
-      "title": "In esse et fuga Mo",
-      "description": "Sed ut ea ut tempora",
-      "rating": 10,
-      "views": 102,
-      "tags": [
-        "html",
-        "css",
-        "js"
-      ],
-      "isAuth": true,
-      "category": "history",
-      "showCommentBlock": true
-    },
-    {
-      "id": "36cf812f-ce2e-4585-b523-228d67245da6",
-      "userId": "8cab0222-1138-4d9b-b9d7-ccd04efdf397",
-      "categoryId": "ba4fbb5b-e428-4ef1-b189-4b0f4d4eaef9",
-      "title": "Doloribus deserunt i",
-      "description": "Iusto dolor eum sequ",
-      "rating": 4,
-      "views": 41,
-      "tags": [
-        "html",
-        "css",
-        "js"
-      ],
-      "isAuth": true,
-      "category": "culture",
-      "showCommentBlock": true
-    },
-    {
-      "id": "9d7a444d-fe30-4ccf-984d-97ef4dcac9f4",
-      "userId": "8cab0222-1138-4d9b-b9d7-ccd04efdf397",
-      "categoryId": "52a6a9c6-6cd3-447d-bb5b-c637ca06e5ab",
-      "title": "Incidunt eu in labo",
-      "description": "Ipsam ut fuga Repud",
-      "rating": 0,
-      "views": 0,
-      "tags": [
-        "html",
-        "css",
-        "js"
-      ],
-      "isAuth": true,
-      "category": "sports",
-      "showCommentBlock": true
-    },
-    {
-      "id": "1cfb6922-c5f5-440d-b46b-228d0afeb7e4",
-      "userId": "8cab0222-1138-4d9b-b9d7-ccd04efdf397",
-      "categoryId": "52a6a9c6-6cd3-447d-bb5b-c637ca06e5ab",
-      "title": "Dolor non praesentiu",
-      "description": "Sit ea in est et ad",
-      "rating": 1,
-      "views": 14,
-      "tags": [
-        "html",
-        "css",
-        "js"
-      ],
-      "isAuth": true,
-      "category": "sports",
-      "showCommentBlock": true
-    },
-    {
-      "id": "150cb6a9-5a9b-4e56-814d-24e8228ff408",
-      "userId": "8cab0222-1138-4d9b-b9d7-ccd04efdf397",
-      "categoryId": "6cb8763e-e85e-4f83-81a2-ed0852b214d7",
-      "title": "Officiis dolore nesc",
-      "description": "Tempora dolores unde",
-      "rating": 0,
-      "views": 0,
-      "tags": [
-        "html",
-        "css",
-        "js"
-      ],
-      "isAuth": true,
-      "category": "religion",
-      "showCommentBlock": true
-    },
-    {
-      "id": "b240d30d-e6d2-4a56-b939-8755ec200e0d",
+      "id": "09487d64-89f5-47c8-9552-3c416c5de5c6",
       "userId": "5804d467-22dc-4634-8183-76eb6b685caa",
       "categoryId": "ba4fbb5b-e428-4ef1-b189-4b0f4d4eaef9",
-      "title": "Et quia modi minim s",
-      "description": "Distinctio Soluta m",
+      "title": {
+        "ka": "რა არის Lorem Ipsum?",
+        "en": "What is Lorem Ipsum?"
+      },
+      "description": {
+        "ka": "Lorem Ipsum საბეჭდი და ტიპოგრაფიული ინდუსტრიის უშინაარსო ტექსტია. იგი სტანდარტად 1500-იანი წლებიდან იქცა, როდესაც უცნობმა მბეჭდავმა ამწყობ დაზგაზე წიგნის საცდელი ეგზემპლარი დაბეჭდა. მისი ტექსტი არამარტო 5 საუკუნის მანძილზე შემორჩა, არამედ მან დღემდე, ელექტრონული ტიპოგრაფიის დრომდეც უცვლელად მოაღწია.",
+        "en": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
+      },
       "rating": 0,
       "views": 0,
       "tags": [
@@ -186,11 +73,37 @@
       ]
     },
     {
-      "id": "6271db59-7e40-45d6-a511-caaef4f1d505",
+      "id": "b3316dbc-b005-4a93-aa1f-4570336c4fbe",
       "userId": "5804d467-22dc-4634-8183-76eb6b685caa",
-      "categoryId": "fc77fecd-b313-4b4b-a976-5dacd0a47c7b",
-      "title": "Placeat quia labori",
-      "description": "Natus qui eum molest",
+      "categoryId": "931448d8-bdb0-4481-8a1a-da5d7fbcb5ef",
+      "title": {
+        "ka": "რატომ ვიყენებთ მას?",
+        "en": "Why do we use it?"
+      },
+      "description": {
+        "ka": "ცნობილი ფაქტია, რომ გვერდის წაკითხვად შიგთავსს შეუძლია მკითხველის ყურადღება მიიზიდოს და დიზაინის აღქმაში ხელი შეუშალოს. Lorem Ipsum-ის გამოყენებით ვღებულობთ იმაზე მეტ",
+        "en": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution"
+      },
+      "rating": 0,
+      "views": 0,
+      "tags": [
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "id": "40f5cba8-f409-4e34-b51e-d0bffc1be8a0",
+      "userId": "5804d467-22dc-4634-8183-76eb6b685caa",
+      "categoryId": "ba4fbb5b-e428-4ef1-b189-4b0f4d4eaef9",
+      "title": {
+        "ka": "რატომ ვიყენებთ მას?",
+        "en": "Why do we use it?"
+      },
+      "description": {
+        "ka": "ცნობილი ფაქტია, რომ გვერდის წაკითხვად შიგთავსს შეუძლია მკითხველის ყურადღება მიიზიდოს და დიზაინის აღქმაში ხელი შეუშალოს. Lorem Ipsum-ის გამოყენებით ვღებულობთ იმაზე მეტ",
+        "en": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution"
+      },
       "rating": 0,
       "views": 0,
       "tags": [
@@ -200,12 +113,5 @@
       ]
     }
   ],
-  "comments": [
-    {
-      "id": "91ab11a8-71e3-4b64-9b93-ccc5346da30d",
-      "userId": "edbeb38f-c9ac-4929-bfdd-c251e94633f6",
-      "postId": "8c234679-4e59-49bb-973b-2014e9a16878",
-      "comment": "Ea ex incidunt accu"
-    }
-  ]
+  "comments": []
 }

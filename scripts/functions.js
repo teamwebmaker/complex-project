@@ -1,10 +1,10 @@
-import { API_URL, RATING_INTERVAL} from './config.js' 
+import { API_URL, PRE_PAGE, RATING_INTERVAL} from './config.js' 
 import { modalPopup } from './services.js'
 import { $getTemplateContentById, $render, $uuid, $insertHtml, $getById, urlBuilder, $renderFragment} from './helpers.js'
-import { modal, posts, dialogBox, searchField} from './dom.js'
+import { modal, posts, dialogBox, searchField, pagination} from './dom.js'
 import { _post_, _get_, _update_, _delete_} from './http.js'
 import { insert, select } from './storage.js'
-import { _option, _post, _comment, _wrapped, _alert, _tableRow, _spinner  } from './components.js'
+import { _option, _post, _comment, _wrapped, _alert, _tableRow, _spinner, _page  } from './components.js'
 
 const showModal = (e) => {
     const {template} = e.dataset
@@ -67,13 +67,19 @@ const createPost = async (e) => {
 
 const storePost = async (e) => {
     e.preventDefault()
-    const { category_id, title, description} = e.target
+    const { category_id, title_ka, title_en, description_ka, description_en} = e.target
     const post = {
         id: $uuid(), 
         userId: select('admin')[0].id,
         categoryId: category_id.value.trim(),
-        title: title.value.trim(), 
-        description: description.value.trim(), 
+        title: {
+            ka: title_ka.value.trim(),
+            en: title_en.value.trim(),
+        }, 
+        description: {
+            ka: description_ka.value.trim(),
+            en: description_en.value.trim()
+        },
         rating: 0,
         views: 0,
         tags: ['html','css','js']
@@ -83,7 +89,7 @@ const storePost = async (e) => {
         e.target.reset()
         modalPopup.hide()
         const category = await _get_(`${API_URL}/categories/${post.categoryId}`)
-        $insertHtml(posts, 'afterbegin', _wrapped("div", _post({...post, category: category.title}), ["col-lg-4", "col-md-2", "sm-6", "mb-4"]))
+        $insertHtml(posts, 'afterbegin', _wrapped("div", _post({...post, category: category.title, language : localStorage.getItem('language'), isAuth : true, showCommentBlock: true}), ["col-lg-4", "col-md-2", "sm-6", "mb-4"]))
     }
 }
 const CreateComment = async (e) => {
@@ -322,7 +328,42 @@ const search = async (e) =>{
 
     }, 1000)
 }
+const pagesGeneration = (total, limit) => {
+    const pages = Math.ceil(total / limit)
+    const pageComponents = []
+    for(let i = 1; i <= pages; i++) pageComponents.push(_page({id:$uuid(),  page: i}))
+    $render(pagination, pageComponents.join(""))
+}
+const paginate = async (e) => {
+    let isAuth = false;
+    const paginationButtons = [...pagination?.children]
+    paginationButtons.forEach((child) =>  child.disabled = false)
+    e.disabled = true
+    if (localStorage.hasOwnProperty('admin')) isAuth = true
+    $render(e, _spinner({id:$uuid(), status:"primary" }))
+    const {page} = e.dataset
+    const url = urlBuilder(`${API_URL}/posts`, {_page: page, _limit: PRE_PAGE})
+    setTimeout( async () => {
+        let postsList = await _get_(url)
+        postsList = await Promise.all( postsList.map( async (post) => {
+            const category = await _get_(`${API_URL}/categories/${post.categoryId}`)
+            return {...post, category: category.title, isAuth, showCommentBlock: true}
+        }) )
+    
+        $render(posts, postsList
+            .map(post => _post(post))
+            .map(post => _wrapped("div", post, ["col-lg-4", "col-md-2", "sm-6", "mb-4"])).join("")
+            )
+        $render(e, page)
+    }, 1000)
+}
 
+const languageSwitcher = (e) => {
+    const {language} = e.dataset
+    localStorage.setItem('language', language)
+    window.location.reload()
+
+}
 export { 
     showModal, 
     registration,
@@ -342,5 +383,7 @@ export {
     filtered,
     sorted,
     search,
-    
+    pagesGeneration,
+    paginate,
+    languageSwitcher
 } 

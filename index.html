@@ -143,10 +143,9 @@
             <button class="nav-link" id="tab-button-en" data-bs-toggle="pill" data-bs-target="#post-en" type="button" role="tab" aria-controls="pills-home" aria-selected="true">EN</button>
           </li>
         </ul>
-        <!-- tabs content -->
+        <!-- tabs content start -->
         <div class="tab-content" id="pills-tabContent">
           <div class="tab-pane fade show active" id="post-ka" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
-            <!--tab-->
             <div class="mb-3">
               <input type="title" class="form-control" placeholder="სათაური" name="title_ka" />
             </div>
@@ -154,17 +153,56 @@
               <textarea class="form-control" placeholder="აღწერა" name="description_ka" rows="3"></textarea>
             </div>
             <!--tab-->
-          </div>
+          </div><!--tab-->
           <div class="tab-pane" id="post-en" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
-                      <!--tab-->
-                      <div class="mb-3">
-                        <input type="title" class="form-control" placeholder="Title" name="title_en" />
-                      </div>
-                      <div class="mb-3">
-                        <textarea class="form-control" placeholder="Description" name="description_en" rows="3"></textarea>
-                      </div>
-                      <!--tab-->
+            <div class="mb-3">
+              <input type="title" class="form-control" placeholder="Title" name="title_en" />
+            </div>
+            <div class="mb-3">
+              <textarea class="form-control" placeholder="Description" name="description_en" rows="3"></textarea>
+            </div>
+          
+        </div><!--tab-->
         </div>
+        <!-- tabs content end -->
+        <!--Tags List-->
+        <div class="row">
+          <div class="col-2">
+            <input type="checkbox" class="btn-check" id="_html" value="HTML"  name="tags">
+            <label class="btn btn-outline-primary" for="_html">HTML</label>
+          </div>
+          <div class="col-2">
+            <input type="checkbox" class="btn-check" id="_css" value="CSS"  name="tags">
+            <label class="btn btn-outline-primary" for="_css">CSS</label>
+          </div>
+          <div class="col-2">
+            <input type="checkbox" class="btn-check" id="_js" value="JS"  name="tags">
+            <label class="btn btn-outline-primary" for="_js">JS</label>
+          </div>
+          <div class="col-2">
+            <input type="checkbox" class="btn-check" id="_ts" value="TS"  name="tags">
+            <label class="btn btn-outline-primary" for="_ts">TS</label>
+          </div>
+          <div class="col-2">
+            <input type="checkbox" class="btn-check" id="_scss" value="SCSS"  name="tags">
+            <label class="btn btn-outline-primary" for="_scss">SCSS</label>
+          </div>
+          <div class="col-2">
+            <input type="checkbox" class="btn-check" id="_json" value="JSON"  name="tags">
+            <label class="btn btn-outline-primary" for="_json">JSON</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-2">
+            <input type="radio" class="btn-check" id="on" value="1"  name="published">
+            <label class="btn btn-outline-success" for="on">ON</label>
+          </div>
+          <div class="col-2">
+            <input type="radio" class="btn-check" id="off" value="0"  name="published" checked>
+            <label class="btn btn-outline-danger" for="off">OFF</label>
+          </div>
+        </div>
+        <!--Tags List-->
         <div class="mb-3">
           <select class="form-select" name="category_id" aria-label="Default select example"></select>
         </div>
@@ -175,12 +213,65 @@
       <!-- Edit Post Templates -->
       <template id="edit-post-template">
         <form onsubmit="updatePost(event)">
-          <div class="mb-3">
-            <input type="title" class="form-control" placeholder="Title" name="title" />
+                  <!-- tabs navigation -->
+        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="tab-button-ka" data-bs-toggle="pill" data-bs-target="#post-ka" type="button" role="tab" aria-controls="pills-home" aria-selected="true">KA</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="tab-button-en" data-bs-toggle="pill" data-bs-target="#post-en" type="button" role="tab" aria-controls="pills-home" aria-selected="true">EN</button>
+          </li>
+        </ul>
+        <!-- tabs content start -->
+        <div class="tab-content" id="pills-tabContent">
+          <div class="tab-pane fade show active" id="post-ka" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
+            <div class="mb-3">
+              <input type="title" class="form-control" placeholder="სათაური" name="title_ka" />
+            </div>
+            <div class="mb-3">
+              <textarea class="form-control" placeholder="აღწერა" name="description_ka" rows="3"></textarea>
+            </div>
+            <!--tab-->
+          </div><!--tab-->
+          <div class="tab-pane" id="post-en" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
+            <div class="mb-3">
+              <input type="title" class="form-control" placeholder="Title" name="title_en" />
+            </div>
+            <div class="mb-3">
+              <textarea class="form-control" placeholder="Description" name="description_en" rows="3"></textarea>
+            </div>
+          
+        </div><!--tab-->
+        </div>
+        <!-- tabs content end -->
+        <!--Tags List-->
+        <div class="row">
+          <div class="col-2">
+            <input type="checkbox" class="btn-check" id="html_" value="HTML"  name="tags">
+            <label class="btn btn-outline-primary" for="html_">HTML</label>
           </div>
-          <div class="mb-3">
-            <textarea class="form-control" placeholder="Description" name="description" rows="3"></textarea>
+          <div class="col-2">
+            <input type="checkbox" class="btn-check" id="css_" value="CSS"  name="tags">
+            <label class="btn btn-outline-primary" for="css_">CSS</label>
           </div>
+          <div class="col-2">
+            <input type="checkbox" class="btn-check" id="js_" value="JS"  name="tags">
+            <label class="btn btn-outline-primary" for="js_">JS</label>
+          </div>
+          <div class="col-2">
+            <input type="checkbox" class="btn-check" id="ts_" value="TS"  name="tags">
+            <label class="btn btn-outline-primary" for="ts_">TS</label>
+          </div>
+          <div class="col-2">
+            <input type="checkbox" class="btn-check" id="scss_" value="SCSS"  name="tags">
+            <label class="btn btn-outline-primary" for="scss_">SCSS</label>
+          </div>
+          <div class="col-2">
+            <input type="checkbox" class="btn-check" id="json_" value="JSON"  name="tags">
+            <label class="btn btn-outline-primary" for="json_">JSON</label>
+          </div>
+        </div>
+        <!--Tags List-->
           <div class="mb-3">
             <select class="form-select" name="category_id" aria-label="Default select example"></select>
           </div>

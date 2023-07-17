@@ -162,14 +162,14 @@ const _alert = (_) => {
 }
 /**
  * 
- * @param {{ id: string,title: string }} _ 
+ * @param {{ id: string,title: string, language: string }} _ 
  * @returns 
  */
 const _tableRow = (_) => {
-    const {id, title} = _
+    const {id, title, language} = _
     return `<tr id="${id}">
                 <th scope="col">#</th>
-                <th scope="col">${title}</th>
+                <th scope="col">${title[language]}</th>
                 <th scope="col"><button type="button" class="btn btn-info" data-post-id="${id}" data-template="edit-post" onclick="editPost(this)"><i class="bi bi-pencil-square"></i></button></th>
                 <th scope="col"><button type="button" class="btn btn-danger" data-post-id="${id}" onclick="deletePost(this)"><i class="bi bi-trash3"></i></button></th>
             </tr>`

@@ -67,7 +67,15 @@ const createPost = async (e) => {
 
 const storePost = async (e) => {
     e.preventDefault()
-    const { category_id, title_ka, title_en, description_ka, description_en} = e.target
+    const { category_id, title_ka, title_en, description_ka, description_en, tags, published} = e.target
+    let isPublished = [...published].find((item) => item.checked)
+    isPublished = Number(isPublished.value) ? true : false
+    const tagsList = [...tags]
+    const selectedTags = []
+    tagsList.forEach((tag) => {
+        if(tag.checked) selectedTags.push(tag.value)
+    })
+    
     const post = {
         id: $uuid(), 
         userId: select('admin')[0].id,
@@ -82,7 +90,8 @@ const storePost = async (e) => {
         },
         rating: 0,
         views: 0,
-        tags: ['html','css','js']
+        tags: selectedTags,
+        isPublished
     }
     const result = await _post_(`${API_URL}/posts`, post)
     if(result)  {
@@ -142,9 +151,8 @@ const viewComments = async (e) => {
     //TODO => views
     const category = await _get_(`${API_URL}/categories/${post.categoryId}`)
     delete post.comments
-    let isAuth = false;
-    if (localStorage.hasOwnProperty('admin')) isAuth = true
-    const updatedPost = {...post, isAuth, category: category.title, showCommentBlock: true, views: post.views + 1, rating: setRating(post.views + 1, RATING_INTERVAL)}
+    let isAuth = localStorage.hasOwnProperty('admin')
+    const updatedPost = {...post, isAuth, category: category.title, showCommentBlock: true,language : localStorage.getItem('language'),  views: post.views + 1, rating: setRating(post.views + 1, RATING_INTERVAL)}
     const result = await _update_(baseUrl, updatedPost)
     if(result) {
         const updatedComponent = $getById(postId)
@@ -182,7 +190,7 @@ const showUserPosts = async (e) => {
     const url = urlBuilder(`${API_URL}/users/${userId}`, {_embed: "posts"})
     // const url = `${API_URL}/users/${userId}?_embed=posts`
     const user = await _get_(url)
-    const posts = user.posts.map((post) => _tableRow(post)).join("")
+    const posts = user.posts.map((post) => _tableRow({...post, language : localStorage.getItem('language')})).join("")
     $render(modal?.querySelector(".modal-body"), _wrapped("table", posts, ["table"]))
     modalPopup.show()
 }
@@ -199,7 +207,7 @@ const editPost = async (e) => {
     const {postId, template} = e.dataset
     const selector = [template , "template"].join("-")
     const templateContent = $getTemplateContentById(selector)
-    const {title, description, category_id, post_id} = templateContent.querySelector("form")
+    const {title_ka, title_en, description_ka, description_en, tags, category_id, post_id} = templateContent.querySelector("form")
     const postUrl = `${API_URL}/posts/${postId}`
     const post = await _get_(postUrl)
     const categoriesUrl = `${API_URL}/categories`
@@ -207,8 +215,15 @@ const editPost = async (e) => {
     const category = categories.find((category) => category.id === post.categoryId)
     $render(category_id, categories.map((category) => _option({id:$uuid(), key:category.id, value:category.title })))
     // TODO => Filling the form with the received data
-    title.value = post.title
-    description.value = post.description
+    const tagLists = [...tags]
+    tagLists.forEach((tag) => {
+        if(post.tags.includes(tag.value)) tag.checked = true
+    })
+
+    title_ka.value = post.title.ka
+    title_en.value = post.title.en
+    description_ka.value = post.description.ka
+    description_en.value = post.description.en
     category_id.value = category.id
     post_id.value = postId
     $renderFragment(modal?.querySelector(".modal-body"), templateContent)
@@ -217,20 +232,32 @@ const editPost = async (e) => {
 
 const updatePost = async (e) => {
     e.preventDefault()
-    const { category_id, title, description, post_id} = e.target 
+    const { category_id, title_ka, title_en, description_ka,description_en, tags, post_id} = e.target 
     const post = await _get_(`${API_URL}/posts/${post_id.value}`)
+    const tagsList = [...tags]
+    const selectedTags = []
+    tagsList.forEach((tag) => {
+        if(tag.checked) selectedTags.push(tag.value)
+    })
     const updatedPost = {
         ...post, 
         categoryId : category_id.value.trim(),
-        title : title.value.trim(),
-        description : description.value.trim(),
+        title: {
+            ka: title_ka.value.trim(),
+            en: title_en.value.trim()
+        },
+        description: {
+            ka : description_ka.value.trim(), 
+            en : description_en.value.trim()
+        },
+        tags: selectedTags
     }
     const result = await _update_(`${API_URL}/posts/${post_id.value}`, updatedPost )
     if(result)  {
         const oldComponent = $getById(post_id.value)
         oldComponent?.classList.add("d-none")
         const category = await _get_(`${API_URL}/categories/${category_id.value.trim()}`)
-        $insertHtml(oldComponent, 'beforebegin', _post( {...updatedPost, category: category.title, isAuth:true, showCommentBlock: true}) )
+        $insertHtml(oldComponent, 'beforebegin', _post( {...updatedPost, category: category.title, isAuth:true, showCommentBlock: true, language : localStorage.getItem('language')}) )
         oldComponent?.remove()
         e.target.reset()
         modalPopup.hide()
@@ -243,9 +270,8 @@ const logOut = () => {
 
 const filtered = async (e) => {
     const categoryId = e.value
-    let isAuth = false;
+    let isAuth = localStorage.hasOwnProperty('admin')
     let allPosts = []
-    if (localStorage.hasOwnProperty('admin')) isAuth = true
     if (categoryId === "all"){
         const postsUrl = `${API_URL}/posts`
         allPosts = await _get_(postsUrl)
@@ -257,7 +283,7 @@ const filtered = async (e) => {
     }
     const postsList = await Promise.all( allPosts.map( async (post) => {
         const category = await _get_(`${API_URL}/categories/${post.categoryId}`)
-        return {...post, category: category.title, isAuth, showCommentBlock: true}
+        return {...post, category: category.title, isAuth, showCommentBlock: true, language : localStorage.getItem('language')}
     }) )
     $render(posts, postsList
         .map(post => _post(post))
@@ -266,8 +292,7 @@ const filtered = async (e) => {
 }
 const sorted = async (e) => {
     const order = e.value
-    let isAuth = false;
-    if (localStorage.hasOwnProperty('admin')) isAuth = true
+    let isAuth = localStorage.hasOwnProperty('admin')
     const categoryUrl = urlBuilder(`${API_URL}/posts`, { _sort: "views", _order: order })
     // const url = `${API_URL}/posts?_sort=views&_order=${order}`
     let postsList = await _get_(categoryUrl)
@@ -302,14 +327,13 @@ const search = async (e) =>{
     const searchValue = searchField?.value.trim() 
     setTimeout(async () => {
         if(searchValue.length >= 3){
-            let isAuth = false;
-            if (localStorage.hasOwnProperty('admin'))isAuth = true;
+            let isAuth = localStorage.hasOwnProperty('admin')
             const searchUrl = urlBuilder(`${API_URL}/posts`, {q:searchValue})
             let postsList = await _get_(searchUrl)
             if(postsList.length){
                 postsList = await Promise.all( postsList.map( async (post) => {
                 const category = await _get_(`${API_URL}/categories/${post.categoryId}`)
-                    return {...post, category: category.title, isAuth, showCommentBlock: true}
+                    return {...post, category: category.title, isAuth, showCommentBlock: true, language : localStorage.getItem('language')}
                 }) )
         
                 $render(posts, postsList
@@ -335,11 +359,10 @@ const pagesGeneration = (total, limit) => {
     $render(pagination, pageComponents.join(""))
 }
 const paginate = async (e) => {
-    let isAuth = false;
+    let isAuth = localStorage.hasOwnProperty('admin')
     const paginationButtons = [...pagination?.children]
     paginationButtons.forEach((child) =>  child.disabled = false)
     e.disabled = true
-    if (localStorage.hasOwnProperty('admin')) isAuth = true
     $render(e, _spinner({id:$uuid(), status:"primary" }))
     const {page} = e.dataset
     const url = urlBuilder(`${API_URL}/posts`, {_page: page, _limit: PRE_PAGE})
@@ -347,7 +370,7 @@ const paginate = async (e) => {
         let postsList = await _get_(url)
         postsList = await Promise.all( postsList.map( async (post) => {
             const category = await _get_(`${API_URL}/categories/${post.categoryId}`)
-            return {...post, category: category.title, isAuth, showCommentBlock: true}
+            return {...post, category: category.title, isAuth, showCommentBlock: true, language : localStorage.getItem('language')}
         }) )
     
         $render(posts, postsList

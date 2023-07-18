@@ -14,7 +14,8 @@
  *              description: string, 
  *              rating: number,
  *              views: number,
- *              tags: string[]
+ *              tags: string[],
+ *              isPublished: Boolean
  *            } } post
  */
 

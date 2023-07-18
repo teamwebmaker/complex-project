@@ -29,11 +29,19 @@ const LANGUAGES = [
     'en',
     'ka'
 ]
+
+
+const ADDITIONAL_PARAMS = {
+    isAuth: localStorage.hasOwnProperty('admin'),
+    language : localStorage.getItem('language'),
+    showCommentBlock: true
+}
 export {
     API_URL,
     PRE_PAGE,
     TOTAL,
     COLLECTIONS,
     RATING_INTERVAL,
-    LANGUAGES
+    LANGUAGES,
+    ADDITIONAL_PARAMS
 }

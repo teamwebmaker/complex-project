@@ -38,45 +38,93 @@
   ],
   "posts": [
     {
-      "id": "9e545ffd-919f-48a8-a940-aefc179af71a",
+      "id": "46e59130-759c-4a8e-8d95-ec4409b0b281",
       "userId": "8f23ef76-11f7-46b7-905a-3bb17819e6d8",
       "categoryId": "52a6a9c6-6cd3-447d-bb5b-c637ca06e5ab",
-      "title": {
-        "ka": "რატომ ვიყენებთ მას?",
-        "en": "Why do we use it?"
-      },
-      "description": {
-        "ka": "რატომ ვიყენებთ მას?\nრატომ ვიყენებთ მას?\nრატომ ვიყენებთ მას?",
-        "en": "Why do we use it?\n\\Why do we use it?\nWhy do we use it?"
-      },
-      "rating": 0,
-      "views": 0,
-      "tags": [
-        "JS",
-        "JSON"
-      ]
-    },
-    {
-      "id": "529c9f07-6cdd-4e19-b99d-1ed750276737",
-      "userId": "8f23ef76-11f7-46b7-905a-3bb17819e6d8",
-      "categoryId": "931448d8-bdb0-4481-8a1a-da5d7fbcb5ef",
       "title": {
         "ka": "სათაური",
         "en": "title"
       },
       "description": {
-        "ka": "ჰჰდსდჯჰფდჰფდჯფჰ",
-        "en": "fddfdfdsfdsds"
+        "ka": "სბგფრსგ",
+        "en": "rrhrhg"
+      },
+      "rating": 0,
+      "views": 3,
+      "tags": [
+        "CSS",
+        "SCSS"
+      ],
+      "isPublished": true,
+      "isAuth": true,
+      "showCommentBlock": true,
+      "language": "ka"
+    },
+    {
+      "id": "f59233c1-3d8c-4997-98a1-5c978d1a1c00",
+      "userId": "8f23ef76-11f7-46b7-905a-3bb17819e6d8",
+      "categoryId": "02e0a265-4cbb-4e13-95ab-7cb7f9bf3c22",
+      "title": {
+        "ka": "რა არის Lorem Ipsum?",
+        "en": "title"
+      },
+      "description": {
+        "ka": "gდვგსგვ",
+        "en": "svfadsvf"
+      },
+      "rating": 0,
+      "views": 1,
+      "tags": [
+        "HTML"
+      ],
+      "isPublished": true
+    },
+    {
+      "id": "ab5d4518-c72d-4435-a92c-636e3bc0a762",
+      "userId": "8f23ef76-11f7-46b7-905a-3bb17819e6d8",
+      "categoryId": "ba4fbb5b-e428-4ef1-b189-4b0f4d4eaef9",
+      "title": {
+        "ka": "რატომ ვიყენებთ მას?",
+        "en": "Why do we use it?"
+      },
+      "description": {
+        "ka": "ტნეტდ",
+        "en": "fndfdngt"
       },
       "rating": 0,
       "views": 0,
       "tags": [
-        "HTML",
-        "JS",
-        "SCSS"
+        "CSS",
+        "TS"
+      ],
+      "isPublished": true
+    },
+    {
+      "id": "1c37189b-9f2e-49a2-ba60-ef6f7794c1ed",
+      "userId": "8f23ef76-11f7-46b7-905a-3bb17819e6d8",
+      "categoryId": "931448d8-bdb0-4481-8a1a-da5d7fbcb5ef",
+      "title": {
+        "ka": "რატომ ვიყენებთ მას?",
+        "en": "Why do we use it?"
+      },
+      "description": {
+        "ka": "ნჰტტრჰჰტჰ",
+        "en": "hbfrertht"
+      },
+      "rating": 0,
+      "views": 0,
+      "tags": [
+        "TS"
       ],
       "isPublished": true
     }
   ],
-  "comments": []
+  "comments": [
+    {
+      "id": "10710bf7-ad92-45bf-97e5-bf59ce969cc6",
+      "userId": "8f23ef76-11f7-46b7-905a-3bb17819e6d8",
+      "postId": "46e59130-759c-4a8e-8d95-ec4409b0b281",
+      "comment": "ulfcul"
+    }
+  ]
 }

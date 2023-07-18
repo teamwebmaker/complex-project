@@ -3,7 +3,7 @@ import {_dashboardLogIn, _dashboardLogOut, _actionsDashboard, _post, _wrapped, _
 import { $render, $uuid, $insertHtml, urlBuilder, $qs} from './helpers.js';
 import { adminDashboard, actionsDashboard, posts, category, ratingPosts, lastPosts} from './dom.js';
 import { _get_ } from './http.js';
-import { API_URL, PRE_PAGE, LANGUAGES } from './config.js';
+import { API_URL, PRE_PAGE, LANGUAGES, ADDITIONAL_PARAMS } from './config.js';
 import { pagesGeneration } from './functions.js'
 
 window.addEventListener('DOMContentLoaded', async()=> {
@@ -34,38 +34,25 @@ window.addEventListener('DOMContentLoaded', async()=> {
         )
     $insertHtml(category, 'afterbegin', _option({id: $uuid(), key: 'all', value: 'All categories'}))
 
-    let postsList = await _get_(`${API_URL}/posts`)
-    postsList = await Promise.all( postsList.map( async (post) => {
-        const category = await _get_(`${API_URL}/categories/${post.categoryId}`)
-        return {...post, category: category.title, isAuth, showCommentBlock: true, language : localStorage.getItem('language') }
-    }) )
-
+    const postsList = await _get_(urlBuilder(`${API_URL}/posts`, {_expand: "category", isPublished: true})) 
     $render(posts, [...postsList].slice(0, PRE_PAGE)
-        .map(post => _post(post))
+        .map(post => _post({...post, ...ADDITIONAL_PARAMS }))
         .map(post => _wrapped("div", post, ["col-lg-4", "col-md-2", "sm-6", "mb-4"])).join("")
         )
     // TODO => get rating posts
-    const ratingPostsUrl = urlBuilder(`${API_URL}/posts`,{ _sort: `rating`, _order: `desc`, _limit: PRE_PAGE})
-    let ratingLimitedPosts = await _get_(ratingPostsUrl)
-        ratingLimitedPosts = await Promise.all( ratingLimitedPosts.map( async (post) => {
-        const category = await _get_(`${API_URL}/categories/${post.categoryId}`)
-        return {...post, category: category.title, isAuth, showCommentBlock: true,  language : localStorage.getItem('language')}
-    }) )
+    const ratingPostsUrl = urlBuilder(`${API_URL}/posts`,{ _sort: `rating`, _order: `desc`, _limit: PRE_PAGE, _expand: "category", isPublished: true})
+    const ratingLimitedPosts = await _get_(ratingPostsUrl)
 
     $render(ratingPosts , ratingLimitedPosts
-        .map(post => _post(post))
+        .map(post => _post({...post, ...ADDITIONAL_PARAMS }))
         .map(post => _wrapped("div", post, ["col-lg-4", "col-md-2", "sm-6", "mb-4"])).join("")
         )
 
-        const lastPostsUrl = urlBuilder(`${API_URL}/posts`,{ _start: postsList.length - PRE_PAGE, _end: postsList.length,})
-    let lastPostsCollection = await _get_(lastPostsUrl)
-    lastPostsCollection = await Promise.all( lastPostsCollection.map( async (post) => {
-        const category = await _get_(`${API_URL}/categories/${post.categoryId}`)
-        return {...post, category: category.title, isAuth, showCommentBlock: true, language : localStorage.getItem('language')}
-    }) )
+        const lastPostsUrl = urlBuilder(`${API_URL}/posts`,{ _start: postsList.length - PRE_PAGE, _end: postsList.length,_expand: "category", isPublished: true})
+    const lastPostsCollection = await _get_(lastPostsUrl)
 
     $render(lastPosts , lastPostsCollection
-        .map(post => _post(post))
+        .map(post => _post({...post, ...ADDITIONAL_PARAMS }))
         .map(post => _wrapped("div", post, ["col-lg-4", "col-md-2", "sm-6", "mb-4"])).join("")
         )
 

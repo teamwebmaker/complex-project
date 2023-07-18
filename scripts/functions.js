@@ -1,10 +1,36 @@
-import { API_URL, PRE_PAGE, RATING_INTERVAL} from './config.js' 
+import { API_URL, PRE_PAGE, RATING_INTERVAL, ADDITIONAL_PARAMS} from './config.js' 
 import { modalPopup } from './services.js'
 import { $getTemplateContentById, $render, $uuid, $insertHtml, $getById, urlBuilder, $renderFragment} from './helpers.js'
 import { modal, posts, dialogBox, searchField, pagination} from './dom.js'
 import { _post_, _get_, _update_, _delete_} from './http.js'
 import { insert, select } from './storage.js'
 import { _option, _post, _comment, _wrapped, _alert, _tableRow, _spinner, _page  } from './components.js'
+
+
+const updatePostsOptions = async () => {
+    const postsList = await _get_(urlBuilder(`${API_URL}/posts`, {_expand: "category", isPublished: true})) 
+    pagesGeneration(postsList.length, PRE_PAGE)
+    $render(posts, postsList.slice(0, PRE_PAGE)
+        .map(post => _post({...post, ...ADDITIONAL_PARAMS }))
+        .map(post => _wrapped("div", post, ["col-lg-4", "col-md-2", "sm-6", "mb-4"])).join("")
+        )
+}
+
+const incrementViews = async (postId) => {
+    const url = urlBuilder(`${API_URL}/posts/${postId}`, {_expand: "category"})
+    const post = await _get_(url)
+    const {category} = post
+    delete post.category
+    const updatedPost = {...post, views: (post.views + 1)}
+    const result = await _update_(url, updatedPost)
+    if(result) {
+        const updatedComponent = $getById(postId)
+        updatedComponent?.classList.add("d-none")
+        const newComponent = _post({...updatedPost, ...ADDITIONAL_PARAMS,category})
+        $insertHtml(updatedComponent, "afterend", newComponent)
+        updatedComponent?.remove()
+    }
+}
 
 const showModal = (e) => {
     const {template} = e.dataset
@@ -97,8 +123,7 @@ const storePost = async (e) => {
     if(result)  {
         e.target.reset()
         modalPopup.hide()
-        const category = await _get_(`${API_URL}/categories/${post.categoryId}`)
-        $insertHtml(posts, 'afterbegin', _wrapped("div", _post({...post, category: category.title, language : localStorage.getItem('language'), isAuth : true, showCommentBlock: true}), ["col-lg-4", "col-md-2", "sm-6", "mb-4"]))
+        await updatePostsOptions()
     }
 }
 const CreateComment = async (e) => {
@@ -131,8 +156,7 @@ const storeComment = async (e) => {
 const viewComments = async (e) => {
     const {postId} = e.dataset
     const baseUrl = `${API_URL}/posts/${postId}`
-    const url = urlBuilder(baseUrl, {_embed: "comments"})
-    // const url = `${API_URL}/posts/${postId}?_embed=comments`
+    const url =  urlBuilder(baseUrl, {_expand: "category", _embed: "comments"})
     const post = await _get_(url)
     
     const comments = await Promise.all( post.comments.map( async (comment) => {
@@ -140,27 +164,16 @@ const viewComments = async (e) => {
         return {...comment, email: user.email }
     }) )
     const admin = localStorage.hasOwnProperty('admin') ? select('admin')[0] : null
-    
+    console.log({...post, ...ADDITIONAL_PARAMS})
     const commentsTemplates = comments.map((comment) => _comment({...comment, admin}))
-    const cardBody = _wrapped("div", _post({...post, showCommentBlock: false}), ["card-body"])
+    const cardBody = _wrapped("div", _post({...post, ...ADDITIONAL_PARAMS}), ["card-body"])
     const cardFooter = _wrapped("div", commentsTemplates.join(""), ["card-footer"])
     const card = _wrapped("div", [cardBody, cardFooter].join(""), ["card"])
     
     $render(modal?.querySelector(".modal-body"), card)
     modalPopup.show()
     //TODO => views
-    const category = await _get_(`${API_URL}/categories/${post.categoryId}`)
-    delete post.comments
-    let isAuth = localStorage.hasOwnProperty('admin')
-    const updatedPost = {...post, isAuth, category: category.title, showCommentBlock: true,language : localStorage.getItem('language'),  views: post.views + 1, rating: setRating(post.views + 1, RATING_INTERVAL)}
-    const result = await _update_(baseUrl, updatedPost)
-    if(result) {
-        const updatedComponent = $getById(postId)
-        updatedComponent?.classList.add("d-none")
-        const newComponent = _post(updatedPost)
-        $insertHtml(updatedComponent, "afterend", newComponent)
-        updatedComponent?.remove()
-    }
+    incrementViews(postId)
 }
 /**
  * 
@@ -200,7 +213,10 @@ const deletePost = async (e) => {
         e.disabled = true
         const url = `${API_URL}/posts/${postId}`
         const result = await _delete_(url)
-        if(result) $getById(postId)?.remove()
+        if(result) {
+            $getById(postId)?.remove()
+            await updatePostsOptions()
+        }
     }
 }
 const editPost = async (e) => {
@@ -233,7 +249,9 @@ const editPost = async (e) => {
 const updatePost = async (e) => {
     e.preventDefault()
     const { category_id, title_ka, title_en, description_ka,description_en, tags, post_id} = e.target 
-    const post = await _get_(`${API_URL}/posts/${post_id.value}`)
+    const post = await _get_(urlBuilder(`${API_URL}/posts/${post_id.value}`,{_expand: "category"}))
+    const {category} = post
+    delete post.category
     const tagsList = [...tags]
     const selectedTags = []
     tagsList.forEach((tag) => {
@@ -257,7 +275,7 @@ const updatePost = async (e) => {
         const oldComponent = $getById(post_id.value)
         oldComponent?.classList.add("d-none")
         const category = await _get_(`${API_URL}/categories/${category_id.value.trim()}`)
-        $insertHtml(oldComponent, 'beforebegin', _post( {...updatedPost, category: category.title, isAuth:true, showCommentBlock: true, language : localStorage.getItem('language')}) )
+        $insertHtml(oldComponent, 'beforebegin', _post( {...updatedPost, ...ADDITIONAL_PARAMS, category}) )
         oldComponent?.remove()
         e.target.reset()
         modalPopup.hide()
@@ -273,35 +291,27 @@ const filtered = async (e) => {
     let isAuth = localStorage.hasOwnProperty('admin')
     let allPosts = []
     if (categoryId === "all"){
-        const postsUrl = `${API_URL}/posts`
-        allPosts = await _get_(postsUrl)
+        allPosts = await _get_(urlBuilder(`${API_URL}/posts`,{isPublished: true}))
     } else {
-        const categoryUrl = urlBuilder(`${API_URL}/categories/${categoryId}`, {_embed: "posts"})
-        // const categoryUrl = `${API_URL}/categories/${categoryId}?_embed=posts`
-        const category = await _get_(categoryUrl)
-        allPosts = category.posts
+        const postsUrl = urlBuilder(`${API_URL}/categories/${categoryId}`, {_expand: "category", isPublished: true})
+        allPosts = await _get_(postsUrl)
+        allPosts = allPosts.filter((post) => post.categoryId === categoryId)
     }
-    const postsList = await Promise.all( allPosts.map( async (post) => {
-        const category = await _get_(`${API_URL}/categories/${post.categoryId}`)
-        return {...post, category: category.title, isAuth, showCommentBlock: true, language : localStorage.getItem('language')}
-    }) )
-    $render(posts, postsList
-        .map(post => _post(post))
+    
+    $render(posts, allPosts
+        .map(post => _post({...post,...ADDITIONAL_PARAMS}))
         .map(post => _wrapped("div", post, ["col-lg-4", "col-md-2", "sm-6", "mb-4"])).join("")
         )
 }
 const sorted = async (e) => {
     const order = e.value
     let isAuth = localStorage.hasOwnProperty('admin')
-    const categoryUrl = urlBuilder(`${API_URL}/posts`, { _sort: "views", _order: order })
+    const categoryUrl = urlBuilder(`${API_URL}/posts`, { _sort: "views", _order: order,_expand: "category",isPublished: true })
     // const url = `${API_URL}/posts?_sort=views&_order=${order}`
     let postsList = await _get_(categoryUrl)
-    postsList = await Promise.all( postsList.map( async (post) => {
-    const category = await _get_(`${API_URL}/categories/${post.categoryId}`)
-        return {...post, category: category.title, isAuth, showCommentBlock: true}
-    }))
+    
     $render(posts, postsList
-        .map(post => _post(post))
+        .map(post => _post({...post,...ADDITIONAL_PARAMS}))
         .map(post => _wrapped("div", post, ["col-lg-4", "col-md-2", "sm-6", "mb-4"])).join("")
         )
 }
@@ -328,16 +338,12 @@ const search = async (e) =>{
     setTimeout(async () => {
         if(searchValue.length >= 3){
             let isAuth = localStorage.hasOwnProperty('admin')
-            const searchUrl = urlBuilder(`${API_URL}/posts`, {q:searchValue})
+            const searchUrl = urlBuilder(`${API_URL}/posts`, {q:searchValue, isPublished: true})
             let postsList = await _get_(searchUrl)
             if(postsList.length){
-                postsList = await Promise.all( postsList.map( async (post) => {
-                const category = await _get_(`${API_URL}/categories/${post.categoryId}`)
-                    return {...post, category: category.title, isAuth, showCommentBlock: true, language : localStorage.getItem('language')}
-                }) )
         
                 $render(posts, postsList
-                    .map(post => _post(post))
+                    .map(post => _post({...post, ...ADDITIONAL_PARAMS}))
                     .map(post => _wrapped("div", post, ["col-lg-4", "col-md-2", "sm-6", "mb-4"])).join("")
                     )
                 }else{
@@ -365,16 +371,12 @@ const paginate = async (e) => {
     e.disabled = true
     $render(e, _spinner({id:$uuid(), status:"primary" }))
     const {page} = e.dataset
-    const url = urlBuilder(`${API_URL}/posts`, {_page: page, _limit: PRE_PAGE})
+    const url = urlBuilder(`${API_URL}/posts`, {_page: page, _limit: PRE_PAGE,_expand: "category"})
     setTimeout( async () => {
-        let postsList = await _get_(url)
-        postsList = await Promise.all( postsList.map( async (post) => {
-            const category = await _get_(`${API_URL}/categories/${post.categoryId}`)
-            return {...post, category: category.title, isAuth, showCommentBlock: true, language : localStorage.getItem('language')}
-        }) )
+        const postsList = await _get_(url)
     
         $render(posts, postsList
-            .map(post => _post(post))
+            .map(post => _post({...post, ...ADDITIONAL_PARAMS }))
             .map(post => _wrapped("div", post, ["col-lg-4", "col-md-2", "sm-6", "mb-4"])).join("")
             )
         $render(e, page)
@@ -387,6 +389,24 @@ const languageSwitcher = (e) => {
     window.location.reload()
 
 }
+
+const togglePublished = async (e) => {
+    const {postId} = e.dataset
+    const url = `${API_URL}/posts/${postId}`
+    const post = await _get_(url)
+    const updatedPost = {...post, isPublished: !post.isPublished}
+    const result = _update_(url, updatedPost)
+    if(result) {
+        const selectedTd = $getById(`td-${postId}`)
+        selectedTd?.classList.add(`d-none`)
+        $insertHtml(selectedTd, "beforebegin", _tableRow({...updatedPost,language: localStorage.getItem('language')}))
+        selectedTd?.remove()
+        await updatePostsOptions()
+    }
+}
+
+
+
 export { 
     showModal, 
     registration,
@@ -408,5 +428,6 @@ export {
     search,
     pagesGeneration,
     paginate,
-    languageSwitcher
+    languageSwitcher,
+    togglePublished
 } 

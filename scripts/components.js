@@ -86,7 +86,7 @@ const _tag = (_) => {
  *          views:number,
  *          rating:number,
  *          tags:string[],
- *          category:string,
+ *          category:object,
  *          isAuth: boolean,
  *          showCommentBlock: boolean
  *          language: string}} _ 
@@ -98,7 +98,7 @@ const _post = (_) => {
     const commentAction = isAuth ? "CreateComment(this)" : "componentAlert()"
     const commentsBlock = showCommentBlock ? [`<button type="button w-50" class="btn btn-success" data-post-id="${id}" data-template="" onclick="viewComments(this)">view comments</button>`, ` <button type="button w-50" class="btn btn-warning" data-post-id="${id}" data-template="create-comment" onclick="${commentAction}">add comment</button>`] : []
 
-    return `<div class="card ${category}" id="${id}">
+    return `<div class="card ${category.title}" id="${id}">
     <div class="card-header">
         <h5 class="card-title">${title[language]}</h5>
         <p class="card-description">${description[language]}</p>
@@ -162,16 +162,19 @@ const _alert = (_) => {
 }
 /**
  * 
- * @param {{ id: string,title: string, language: string }} _ 
+ * @param {{ id: string,title: string, language: string, isPublished: boolean}} _ 
  * @returns 
  */
 const _tableRow = (_) => {
-    const {id, title, language} = _
-    return `<tr id="${id}">
+    const {id, title, language, isPublished} = _
+    const eyeClasses = ['bi']
+    isPublished ? eyeClasses.push('bi-eye') : eyeClasses.push('bi-eye-slash')
+    return `<tr id="td-${id}">
                 <th scope="col">#</th>
                 <th scope="col">${title[language]}</th>
                 <th scope="col"><button type="button" class="btn btn-info" data-post-id="${id}" data-template="edit-post" onclick="editPost(this)"><i class="bi bi-pencil-square"></i></button></th>
-                <th scope="col"><button type="button" class="btn btn-danger" data-post-id="${id}" onclick="deletePost(this)"><i class="bi bi-trash3"></i></button></th>
+                <th scope="col"><button type="button" class="btn btn-danger" data-post-id="${id}" data-template="delete-post" onclick="deletePost(this)"><i class="bi bi-trash"></i></button></th>
+                <th scope="col"><button type="button" class="btn btn-warning" data-post-id="${id}" onclick="togglePublished(this)"><i class="${eyeClasses.join(' ')}"></i></button></th>
             </tr>`
 }
 
